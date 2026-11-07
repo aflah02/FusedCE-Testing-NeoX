@@ -1,0 +1,9 @@
+# Retain reproducible inputs; ignore generated benchmark output.
+runs/*
+!runs/.gitkeep
+summary_*.tsv
+comparison_*.tsv
+wandb/
+slurm-*.out
+slurm-*.err
+docker-build-*.log

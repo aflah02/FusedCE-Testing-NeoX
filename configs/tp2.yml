@@ -1,0 +1,6 @@
+{
+  "num_gpus": 2,
+  "pipe_parallel_size": 1,
+  "model_parallel_size": 2,
+  "sequence_parallel": false
+}

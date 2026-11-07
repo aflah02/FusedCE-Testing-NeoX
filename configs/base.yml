@@ -1,0 +1,91 @@
+{
+  "seq_length": 2048,
+  "max_position_embeddings": 2048,
+  "pos_emb": "rotary",
+  "rotary_pct": 1.0,
+  "no_weight_tying": false,
+  "gpt_j_residual": false,
+  "output_layer_parallelism": "column",
+  "norm": "layernorm",
+  "use_bias_in_mlp": true,
+  "use_bias_in_norms": true,
+  "use_bias_in_attn_linear": true,
+
+  "scaled_upper_triang_masked_softmax_fusion": false,
+  "bias_gelu_fusion": false,
+  "bias_dropout_fusion": true,
+  "rope_fusion": false,
+  "layernorm_fusion": false,
+
+  "init_method": "small_init",
+  "output_layer_init_method": "wang_init",
+
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "lr": 0.00025,
+      "betas": [0.9, 0.95],
+      "eps": 1.0e-8
+    }
+  },
+  "min_lr": 0.000025,
+  "zero_optimization": {
+    "stage": 0,
+    "allgather_partitions": true,
+    "allgather_bucket_size": 500000000,
+    "overlap_comm": true,
+    "reduce_scatter": true,
+    "reduce_bucket_size": 500000000,
+    "contiguous_gradients": true,
+    "cpu_offload": false
+  },
+
+  "precision": "bfloat16",
+  "bf16": {
+    "enabled": true
+  },
+  "data_types": {
+    "grad_accum_dtype": "fp32"
+  },
+  "fp32_allreduce": true,
+
+  "train_micro_batch_size_per_gpu": 4,
+  "gradient_accumulation_steps": 1,
+  "data_path": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document",
+  "data_impl": "mmap",
+  "dataset_impl": "gpt2",
+  "pack_impl": "packed",
+  "split": "90,5,5",
+  "tokenizer_type": "GPT2BPETokenizer",
+  "vocab_file": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-vocab.json",
+  "merge_file": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-merges.txt",
+  "num_workers": 2,
+
+  "checkpoint_activations": true,
+  "checkpoint_num_layers": 1,
+  "partition_activations": false,
+  "synchronize_each_layer": false,
+
+  "gradient_clipping": 1.0,
+  "weight_decay": 0.1,
+  "hidden_dropout": 0.0,
+  "attention_dropout": 0.0,
+
+  "distributed_backend": "nccl",
+  "lr_decay_style": "cosine",
+  "warmup": 0.0,
+  "checkpoint_factor": 1000,
+  "extra_save_iters": [],
+  "eval_interval": 1000,
+  "eval_iters": 0,
+
+  "save": null,
+  "load": null,
+  "checkpoint_validation_with_forward_pass": false,
+  "use_wandb": true,
+  "wandb_host": "https://api.wandb.ai",
+  "seed": 1234,
+  "log_interval": 1,
+  "steps_per_print": 1,
+  "wall_clock_breakdown": false
+}
