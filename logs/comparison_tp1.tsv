@@ -1,0 +1,2 @@
+parallelism	final_loss_abs_diff	unfused_over_fused_speedup
+tp1	0.002841	0.997504

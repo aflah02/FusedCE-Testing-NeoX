@@ -67,19 +67,22 @@ PARALLELISM=tp8 GPU_DEVICES=0,1,2,3,4,5,6,7 \
   bash logs/fused_cross_entropy_testing/run_matrix.sh
 ```
 
-For a single-node eight-GPU Slurm allocation, submit from the repository root
-or from `logs/fused_cross_entropy_testing`:
+For a single-node eight-GPU Slurm allocation, submit from the experiment
+directory so Slurm writes scheduler output into this repository's `logs/`
+directory:
 
 ```bash
+cd logs/fused_cross_entropy_testing
+
 # Short TP=8 smoke test on H100 SXM; both variants run.
 sbatch --partition=h100sxm \
   --export=ALL,TRAIN_ITERS=4,WARMUP_ITERS=1,RUN_LABEL=smoke \
-  logs/fused_cross_entropy_testing/run_tp8.slurm
+  run_tp8.slurm
 
 # Full TP=8 comparison on H200.
 sbatch --partition=h200 \
   --export=ALL,TRAIN_ITERS=50,WARMUP_ITERS=10,RUN_LABEL=h200-full \
-  logs/fused_cross_entropy_testing/run_tp8.slurm
+  run_tp8.slurm
 ```
 
 The partition can also be `h100` or `h100nvl`. The job requests one node and
@@ -98,7 +101,7 @@ Use `VOCAB_SIZES` to run a supported subset, for example:
 ```bash
 sbatch --partition=h200 \
   --export=ALL,VOCAB_SIZES=65536:262144,RUN_LABEL=h200-subset \
-  logs/fused_cross_entropy_testing/run_tp8.slurm
+  run_tp8.slurm
 ```
 
 If loading the saved tar is too slow or provides too little progress output,
@@ -107,7 +110,7 @@ use the build variant instead:
 ```bash
 sbatch --partition=h200 \
   --export=ALL,TRAIN_ITERS=50,WARMUP_ITERS=10,RUN_LABEL=h200-build \
-  logs/fused_cross_entropy_testing/run_tp8_build.slurm
+  run_tp8_build.slurm
 ```
 
 This builds `gpt-neox:te` from `containers/docker/Dockerfile.TE` on the
@@ -115,7 +118,7 @@ allocated node and then runs the same TP=8 vocabulary sweep. BuildKit is
 explicitly disabled because the cluster Docker client does not include the
 `buildx` component. The classic builder prints each `Step N/M`, and the
 wrapper emits a timestamped heartbeat every 60 seconds. Combined output is saved as
-`logs/fused_cross_entropy_testing/docker-build-<job-id>.log` in addition to
+`logs/docker-build-<job-id>.log` in addition to
 the Slurm output. Existing Docker layers are reused by default; pass
 `DOCKER_BUILD_NO_CACHE=1` through `sbatch --export` to force a clean build.
 
@@ -125,12 +128,12 @@ For the corresponding four-GPU sweep, use the TP=4 launchers:
 # Use an existing image, loading the saved tar only when needed.
 sbatch --partition=h100 \
   --export=ALL,TRAIN_ITERS=50,WARMUP_ITERS=10,RUN_LABEL=h100-tp4 \
-  logs/fused_cross_entropy_testing/run_tp4.slurm
+  run_tp4.slurm
 
 # Build the image with the classic builder, then run the TP=4 sweep.
 sbatch --partition=h100 \
   --export=ALL,TRAIN_ITERS=50,WARMUP_ITERS=10,RUN_LABEL=h100-tp4-build \
-  logs/fused_cross_entropy_testing/run_tp4_build.slurm
+  run_tp4_build.slurm
 ```
 
 Both TP=4 launchers request four GPUs and 256GB of host memory, exclude
@@ -183,12 +186,13 @@ PARALLELISM=tp2 TRAIN_ITERS=50 WARMUP_ITERS=10 \
 
 ## Outputs
 
-Each backend writes `runs/<tp>_<variant>.log`. `summary_<tp>.tsv` records the
-exit code, pass/fail result, wall-clock duration, final language-model loss,
-and post-warmup mean iteration time and samples/second. A run passes only if it
-reaches the requested final iteration without a reported NaN iteration.
+Each backend writes `logs/runs/<tp>_<variant>.log`.
+`logs/summary_<tp>.tsv` records the exit code, pass/fail result, wall-clock
+duration, final language-model loss, and post-warmup mean iteration time and
+samples/second. A run passes only if it reaches the requested final iteration
+without a reported NaN iteration.
 
-When both backends run successfully, `comparison_<tp>.tsv` reports:
+When both backends run successfully, `logs/comparison_<tp>.tsv` reports:
 
 - the absolute difference between final logged losses; and
 - `unfused_ms / fused_ms`, where a value greater than one favors fusion.

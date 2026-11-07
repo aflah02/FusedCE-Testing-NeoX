@@ -1,0 +1,2 @@
+parallelism	final_loss_abs_diff	unfused_over_fused_speedup
+tp8_h100-5915503-vocab131072	0.004968	1.023763

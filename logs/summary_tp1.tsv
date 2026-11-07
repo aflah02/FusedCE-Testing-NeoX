@@ -1,0 +1,3 @@
+variant	exit_code	result	duration_seconds	final_lm_loss	avg_iteration_ms	avg_samples_per_sec
+tp1_unfused	0	PASS	55	7.583905E+00	341.697	11.707
+tp1_fused	0	PASS	48	7.586746E+00	342.552	11.679

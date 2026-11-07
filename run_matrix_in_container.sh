@@ -4,7 +4,8 @@ umask 000
 
 experiment_dir="/workspace/gpt-neox/logs/fused_cross_entropy_testing"
 config_dir="${experiment_dir}/configs"
-run_dir="${experiment_dir}/runs"
+log_dir="${experiment_dir}/logs"
+run_dir="${log_dir}/runs"
 source_dir="/workspace/gpt-neox"
 parallelism="${PARALLELISM:-tp2}"
 run_label="${RUN_LABEL:-}"
@@ -96,8 +97,8 @@ for required_file in \
 done
 
 mkdir -p "${run_dir}"
-summary_path="${experiment_dir}/summary_${run_key}.tsv"
-comparison_path="${experiment_dir}/comparison_${run_key}.tsv"
+summary_path="${log_dir}/summary_${run_key}.tsv"
+comparison_path="${log_dir}/comparison_${run_key}.tsv"
 printf 'variant\texit_code\tresult\tduration_seconds\tfinal_lm_loss\tavg_iteration_ms\tavg_samples_per_sec\n' \
   > "${summary_path}"
 printf 'parallelism\tfinal_loss_abs_diff\tunfused_over_fused_speedup\n' \

@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
-# Submit from the GPT-NeoX repository root. Override the default partition with
-# `sbatch --partition=h200 ...` (also valid: h100, h100nvl, h100sxm).
+# Submit from logs/fused_cross_entropy_testing so scheduler output lands in
+# this repository's logs directory. Override the default partition as needed.
 #SBATCH --job-name=fused-ce-tp4
 #SBATCH --partition=h100,h100nvl,h100sxm,h200
 #SBATCH --exclude=sws-8h100grid-04
@@ -11,8 +11,8 @@
 #SBATCH --gres=gpu:4
 #SBATCH --mem=256G
 #SBATCH --time=02:00:00
-#SBATCH --output=slurm-%x-%j.out
-#SBATCH --error=slurm-%x-%j.err
+#SBATCH --output=logs/slurm-%x-%j.out
+#SBATCH --error=logs/slurm-%x-%j.err
 
 set -euo pipefail
 

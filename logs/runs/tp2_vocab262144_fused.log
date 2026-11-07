@@ -1,0 +1,864 @@
+[2026-10-17T11:35:41+00:00] Starting tp2_fused
+[2026-10-17 11:35:43,594] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1130: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1139: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+fatal: not a git repository (or any of the parent directories): .git
+NeoXArgs.from_ymls() ['/workspace/gpt-neox/logs/fused_cross_entropy_testing/configs/base.yml', '/workspace/gpt-neox/logs/fused_cross_entropy_testing/configs/tp2.yml', '/workspace/gpt-neox/logs/fused_cross_entropy_testing/configs/fused.yml', '/tmp/fused-ce-testing-source.jsm8Tf/fused_ce_test_overrides_tp2_fused.yml']
+INFO:root:NeoXArgs.calculate_derived() Total number of GPUs determined to be: 2
+-------------------- arguments --------------------
+  attention_config ................ ['flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash', 'flash']updated
+  batch_size ...................... 4...........................updated
+  bf16 ............................ {'enabled': True}...........updated
+  bias_dropout_fusion ............. True........................updated
+  checkpoint_activations .......... True........................updated
+  checkpoint_factor ............... 1000........................updated
+  config_files .................... {'base.yml': '{\n  "num_layers": 16,\n  "hidden_size": 2048,\n  "num_attention_heads": 16,\n  "seq_length": 2048,\n  "max_position_embeddings": 2048,\n  "pos_emb": "rotary",\n  "rotary_pct": 1.0,\n  "no_weight_tying": false,\n  "gpt_j_residual": false,\n  "output_layer_parallelism": "column",\n  "attention_config": [[["flash"], 16]],\n\n  "norm": "layernorm",\n  "use_bias_in_mlp": true,\n  "use_bias_in_norms": true,\n  "use_bias_in_attn_linear": true,\n\n  "scaled_upper_triang_masked_softmax_fusion": false,\n  "bias_gelu_fusion": false,\n  "bias_dropout_fusion": true,\n  "rope_fusion": false,\n  "layernorm_fusion": false,\n\n  "init_method": "small_init",\n  "output_layer_init_method": "wang_init",\n\n  "optimizer": {\n    "type": "Adam",\n    "params": {\n      "lr": 0.00025,\n      "betas": [0.9, 0.95],\n      "eps": 1.0e-8\n    }\n  },\n  "min_lr": 0.000025,\n  "zero_optimization": {\n    "stage": 0,\n    "allgather_partitions": true,\n    "allgather_bucket_size": 500000000,\n    "overlap_comm": true,\n    "reduce_scatter": true,\n    "reduce_bucket_size": 500000000,\n    "contiguous_gradients": true,\n    "cpu_offload": false\n  },\n\n  "precision": "bfloat16",\n  "bf16": {\n    "enabled": true\n  },\n  "data_types": {\n    "grad_accum_dtype": "fp32"\n  },\n  "fp32_allreduce": true,\n\n  "train_micro_batch_size_per_gpu": 4,\n  "gradient_accumulation_steps": 1,\n  "data_path": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document",\n  "data_impl": "mmap",\n  "dataset_impl": "gpt2",\n  "pack_impl": "packed",\n  "split": "90,5,5",\n  "tokenizer_type": "GPT2BPETokenizer",\n  "vocab_file": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-vocab.json",\n  "merge_file": "/workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-merges.txt",\n  "num_workers": 2,\n\n  "checkpoint_activations": true,\n  "checkpoint_num_layers": 1,\n  "partition_activations": false,\n  "synchronize_each_layer": false,\n\n  "gradient_clipping": 1.0,\n  "weight_decay": 0.1,\n  "hidden_dropout": 0.0,\n  "attention_dropout": 0.0,\n\n  "distributed_backend": "nccl",\n  "lr_decay_style": "cosine",\n  "warmup": 0.0,\n  "checkpoint_factor": 1000,\n  "extra_save_iters": [],\n  "eval_interval": 1000,\n  "eval_iters": 0,\n\n  "save": null,\n  "load": null,\n  "checkpoint_validation_with_forward_pass": false,\n  "use_wandb": true,\n  "wandb_host": "https://api.wandb.ai",\n  "seed": 1234,\n  "log_interval": 1,\n  "steps_per_print": 1,\n  "wall_clock_breakdown": false\n}\n', 'tp2.yml': '{\n  "num_gpus": 2,\n  "pipe_parallel_size": 1,\n  "model_parallel_size": 2,\n  "sequence_parallel": false\n}\n\n', 'fused.yml': '{\n  "cross_entropy_fusion": true\n}\n\n', 'fused_ce_test_overrides_tp2_fused.yml': '{"train_iters": 50, "lr_decay_iters": 50, "make_vocab_size_divisible_by": 131072, "wandb_project": "gpt-neox-fused-cross-entropy-issue-1444", "wandb_group": "1b-wikitext2-tp2-vocab262144-20261017T113407Z", "wandb_run_name": "1b-wikitext2-tp2-vocab262144-20261017T113407Z-fused"}\n'}updated
+  cross_entropy_fusion ............ True........................updated
+  data_impl ....................... mmap........................updated
+  data_path ....................... /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_documentupdated
+  data_types ...................... {'grad_accum_dtype': 'fp32'}updated
+  dynamic_loss_scale .............. True........................updated
+  eval_iters ...................... 0...........................updated
+  extra_save_iters ................ []..........................updated
+  fp32_allreduce .................. True........................updated
+  global_num_gpus ................. 2...........................updated
+  gradient_clipping ............... 1.0.........................updated
+  hidden_size ..................... 2048........................updated
+  init_method ..................... small_init..................updated
+  is_pipe_parallel ................ True........................updated
+  log_interval .................... 1...........................updated
+  lr .............................. 0.00025.....................updated
+  lr_decay_iters .................. 50..........................updated
+  lr_decay_style .................. cosine......................updated
+  make_vocab_size_divisible_by .... 131072......................updated
+  max_position_embeddings ......... 2048........................updated
+  merge_file ...................... /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-merges.txtupdated
+  min_lr .......................... 2.5e-05.....................updated
+  model_parallel_size ............. 2...........................updated
+  num_attention_heads ............. 16..........................updated
+  num_gpus ........................ 2...........................updated
+  num_layers ...................... 16..........................updated
+  optimizer ....................... {'type': 'Adam', 'params': {'lr': 0.00025, 'betas': [0.9, 0.95], 'eps': 1e-08}}updated
+  optimizer_type .................. Adam........................updated
+  output_layer_init_method ........ wang_init...................updated
+  pipe_parallel_size .............. 1...........................updated
+  pos_emb ......................... rotary......................updated
+  precision ....................... bfloat16....................updated
+  seq_length ...................... 2048........................updated
+  sparsity_config ................. {}..........................updated
+  split ........................... 90,5,5......................updated
+  steps_per_print ................. 1...........................updated
+  text_gen_type ................... unconditional...............updated
+  train_batch_size ................ 4...........................updated
+  train_iters ..................... 50..........................updated
+  train_micro_batch_size_per_gpu .. 4...........................updated
+  use_wandb ....................... True........................updated
+  user_script ..................... train.py....................updated
+  vocab_file ...................... /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/gpt2-vocab.jsonupdated
+  wandb_group ..................... 1b-wikitext2-tp2-vocab262144-20261017T113407Z_7gk1u4xa_imt73tqlupdated
+  wandb_project ................... gpt-neox-fused-cross-entropy-issue-1444updated
+  wandb_run_name .................. 1b-wikitext2-tp2-vocab262144-20261017T113407Z-fusedupdated
+  warmup .......................... 0.0.........................updated
+  zero_optimization ............... {'stage': 0, 'allgather_partitions': True, 'allgather_bucket_size': 500000000, 'overlap_comm': True, 'reduce_scatter': True, 'reduce_bucket_size': 500000000, 'contiguous_gradients': True, 'cpu_offload': False}updated
+  zero_stage ...................... 0...........................updated
+  account ......................... None........................default
+  activation ...................... gelu........................default
+  activation_checkpointing ........ None........................default
+  adlr_autoresume ................. False.......................default
+  adlr_autoresume_interval ........ 1000........................default
+  allow_chopped ................... True........................default
+  amp ............................. None........................default
+  apply_query_key_layer_scaling ... False.......................default
+  attention_dropout ............... 0.0.........................default
+  attention_softmax_in_fp32 ....... False.......................default
+  autotuning ...................... None........................default
+  autotuning_run .................. None........................default
+  base_shapes_file ................ None........................default
+  bias_gelu_fusion ................ False.......................default
+  char_level_ppl .................. False.......................default
+  checkpoint ...................... None........................default
+  checkpoint_in_cpu ............... False.......................default
+  checkpoint_num_layers ........... 1...........................default
+  checkpoint_scale ................ linear......................default
+  checkpoint_validation_with_forward_pass  False................default
+  comet_experiment ................ None........................default
+  comet_experiment_name ........... None........................default
+  comet_others .................... None........................default
+  comet_project ................... None........................default
+  comet_tags ...................... None........................default
+  comet_workspace ................. None........................default
+  comment ......................... None........................default
+  comms_logger .................... None........................default
+  communication_data_type ......... None........................default
+  compression_training ............ None........................default
+  contiguous_checkpointing ........ False.......................default
+  coord_check ..................... False.......................default
+  csv_monitor ..................... None........................default
+  curriculum_learning ............. None........................default
+  curriculum_seqlen ............... 0...........................default
+  data_efficiency ................. None........................default
+  dataset_impl .................... gpt2........................default
+  deepscale ....................... False.......................default
+  deepscale_config ................ None........................default
+  deepspeed ....................... True........................default
+  deepspeed_activation_checkpointing  True......................default
+  deepspeed_extra_args ............ None........................default
+  deepspeed_mpi ................... False.......................default
+  deepspeed_slurm ................. False.......................default
+  dim_att ......................... None........................default
+  distributed_backend ............. nccl........................default
+  do_test ......................... None........................default
+  do_train ........................ None........................default
+  do_valid ........................ None........................default
+  dpo_beta ........................ 0.1.........................default
+  dpo_fp32 ........................ True........................default
+  dpo_reference_free .............. False.......................default
+  dump_state ...................... False.......................default
+  elasticity ...................... None........................default
+  eod_mask_loss ................... False.......................default
+  eval_interval ................... 1000........................default
+  eval_loss_logging ............... blended.....................default
+  eval_results_prefix ............. ............................default
+  eval_tasks ...................... None........................default
+  exclude ......................... None........................default
+  exit_interval ................... None........................default
+  expansion_factor ................ None........................default
+  ffn_dim ......................... None........................default
+  finetune ........................ False.......................default
+  flops_profiler .................. None........................default
+  force_multi ..................... False.......................default
+  fp16 ............................ None........................default
+  fp16_lm_cross_entropy ........... False.......................default
+  fp32_reinforce .................. True........................default
+  fused_kernels_build_path ........ None........................default
+  git_hash ........................ None........................default
+  gmlp_attn_dim ................... 64..........................default
+  gpt_j_residual .................. False.......................default
+  gpt_j_tied ...................... False.......................default
+  gradient_accumulation_steps ..... 1...........................default
+  gradient_noise_scale_cpu_offload  False.......................default
+  gradient_noise_scale_n_batches .. 5...........................default
+  gradient_predivide_factor ....... 1.0.........................default
+  head_size ....................... None........................default
+  hidden_dropout .................. 0.0.........................default
+  hostfile ........................ None........................default
+  hysteresis ...................... 2...........................default
+  include ......................... None........................default
+  init_method_std ................. 0.02........................default
+  intermediate_size ............... None........................default
+  iteration ....................... None........................default
+  keep_last_n_checkpoints ......... None........................default
+  kl_div_beta ..................... 0.1.........................default
+  kl_impl ......................... mse.........................default
+  kto_beta ........................ 0.1.........................default
+  kto_desirable_weight ............ 1.0.........................default
+  kto_fp32 ........................ True........................default
+  kto_undesirable_weight .......... 1.0.........................default
+  launcher ........................ pdsh........................default
+  layernorm_epsilon ............... 1e-05.......................default
+  layernorm_fusion ................ False.......................default
+  lazy_mpu_init ................... False.......................default
+  load ............................ None........................default
+  local_rank ...................... None........................default
+  log_dir ......................... None........................default
+  log_grad_norm ................... False.......................default
+  log_grad_pct_zeros .............. False.......................default
+  log_gradient_noise_scale ........ False.......................default
+  log_optimizer_states ............ False.......................default
+  log_param_norm .................. False.......................default
+  loss_scale ...................... None........................default
+  loss_scale_window ............... 1000.0......................default
+  lr_decay_fraction ............... None........................default
+  mamba_causal_conv_fusion ........ False.......................default
+  mamba_inner_func_fusion ......... False.......................default
+  mamba_selective_fp32_params ..... True........................default
+  mamba_selective_scan_fusion ..... False.......................default
+  mamba_use_bias_in_conv .......... True........................default
+  mamba_use_bias_in_linears ....... False.......................default
+  master_addr ..................... None........................default
+  master_port ..................... 29500.......................default
+  maximum_tokens .................. 64..........................default
+  memory_profiling ................ False.......................default
+  memory_profiling_path ........... None........................default
+  min_scale ....................... 1.0.........................default
+  mlp_multiple_of ................. 1...........................default
+  mmap_warmup ..................... False.......................default
+  moe_expert_interval ............. 1...........................default
+  moe_jitter_eps .................. None........................default
+  moe_lbl_in_fp32 ................. False.......................default
+  moe_num_experts ................. 1...........................default
+  moe_router_type ................. sinkhorn....................default
+  moe_top_k ....................... 1...........................default
+  mup_attn_temp ................... 1.0.........................default
+  mup_embedding_mult .............. 1.0.........................default
+  mup_init_scale .................. 1.0.........................default
+  mup_output_temp ................. 1.0.........................default
+  mup_rp_embedding_mult ........... 1.0.........................default
+  mup_width_scale ................. 2...........................default
+  neg_test_data_paths ............. None........................default
+  neg_test_label_data_paths ....... None........................default
+  neg_train_data_paths ............ None........................default
+  neg_train_label_data_paths ...... None........................default
+  neg_valid_data_paths ............ None........................default
+  neg_valid_label_data_paths ...... None........................default
+  no_load_optim ................... False.......................default
+  no_load_rng ..................... False.......................default
+  no_save_optim ................... False.......................default
+  no_save_rng ..................... False.......................default
+  no_ssh_check .................... False.......................default
+  no_weight_tying ................. False.......................default
+  norm ............................ layernorm...................default
+  num_kv_heads .................... None........................default
+  num_nodes ....................... -1..........................default
+  num_samples ..................... 1...........................default
+  num_unique_layers ............... None........................default
+  num_workers ..................... 2...........................default
+  online_dataserver_ips ........... localhost...................default
+  online_dataserver_ports ......... 10000.......................default
+  onnx_safe ....................... False.......................default
+  opt_pos_emb_offset .............. 0...........................default
+  output_layer_parallelism ........ column......................default
+  override_lr_scheduler ........... False.......................default
+  pack_impl ....................... packed......................default
+  padded_vocab_size ............... None........................default
+  param_sharing_style ............. grouped.....................default
+  partition_activations ........... False.......................default
+  peak_theoretical_tflops ......... None........................default
+  pipe_partition_method ........... type:transformer|mlp........default
+  pos_test_data_paths ............. None........................default
+  pos_test_label_data_paths ....... None........................default
+  pos_train_data_paths ............ None........................default
+  pos_train_label_data_paths ...... None........................default
+  pos_valid_data_paths ............ None........................default
+  pos_valid_label_data_paths ...... None........................default
+  precompute_model_name ........... None........................default
+  prescale_gradients .............. False.......................default
+  profile ......................... False.......................default
+  profile_backward ................ False.......................default
+  profile_step_start .............. 10..........................default
+  profile_step_stop ............... 12..........................default
+  prompt_end ...................... 
+...........................default
+  rank ............................ None........................default
+  recompute ....................... False.......................default
+  reinforce_leave_one_out ......... False.......................default
+  return_logits ................... False.......................default
+  rms_norm_epsilon ................ 1e-08.......................default
+  rmsnorm_fusion .................. False.......................default
+  rope_fusion ..................... False.......................default
+  rotary_emb_base ................. 10000.......................default
+  rotary_pct ...................... 1.0.........................default
+  rotary_save_freqs_buffer ........ False.......................default
+  rpe_max_distance ................ 128.........................default
+  rpe_num_buckets ................. 32..........................default
+  s3_chunk_size ................... 104857600...................default
+  s3_path ......................... None........................default
+  sample_input_file ............... None........................default
+  sample_output_file .............. samples.txt.................default
+  save ............................ None........................default
+  save_base_shapes ................ False.......................default
+  scaled_masked_softmax_fusion .... False.......................default
+  scaled_upper_triang_masked_softmax_fusion  False..............default
+  scalenorm_epsilon ............... 1e-08.......................default
+  scheduler ....................... None........................default
+  seed ............................ 1234........................default
+  sequence_parallel ............... False.......................default
+  serve_model_weights ............. False.......................default
+  short_seq_prob .................. 0.1.........................default
+  sliding_window_width ............ None........................default
+  soft_prompt_tuning .............. None........................default
+  sparse_gradients ................ False.......................default
+  synchronize_each_layer .......... False.......................default
+  te_columnparallel ............... False.......................default
+  te_fp8_amax_compute_algo ........ most_recent.................default
+  te_fp8_amax_history_len ......... 1...........................default
+  te_fp8_format ................... hybrid......................default
+  te_fp8_margin ................... 0...........................default
+  te_fp8_mha ...................... False.......................default
+  te_fp8_wgrad .................... True........................default
+  te_layernorm_mlp ................ False.......................default
+  te_mha .......................... False.......................default
+  te_rowparallel .................. False.......................default
+  temperature ..................... 0.0.........................default
+  tensorboard ..................... None........................default
+  tensorboard_dir ................. None........................default
+  test_data_names ................. None........................default
+  test_data_paths ................. None........................default
+  test_data_weights ............... None........................default
+  test_label_data_paths ........... None........................default
+  test_reward_data_paths .......... None........................default
+  tokenizer_type .................. GPT2BPETokenizer............default
+  top_k ........................... 0...........................default
+  top_p ........................... 0.0.........................default
+  train_data_paths ................ None........................default
+  train_data_weights .............. None........................default
+  train_epochs .................... None........................default
+  train_impl ...................... normal......................default
+  train_label_data_paths .......... None........................default
+  train_reward_data_paths ......... None........................default
+  use_bias_in_attn_linear ......... True........................default
+  use_bias_in_mlp ................. True........................default
+  use_bias_in_norms ............... True........................default
+  use_bnb_optimizer ............... False.......................default
+  use_checkpoint_lr_scheduler ..... False.......................default
+  use_comet ....................... None........................default
+  use_cpu_initialization .......... False.......................default
+  use_flashattn_swiglu ............ False.......................default
+  use_mup ......................... False.......................default
+  use_qk_layernorm ................ False.......................default
+  use_shared_fs ................... True........................default
+  valid_data_names ................ None........................default
+  valid_data_paths ................ None........................default
+  valid_data_weights .............. None........................default
+  valid_label_data_paths .......... None........................default
+  valid_reward_data_paths ......... None........................default
+  wall_clock_breakdown ............ False.......................default
+  wandb ........................... None........................default
+  wandb_host ...................... https://api.wandb.ai........default
+  wandb_init_all_ranks ............ False.......................default
+  wandb_team ...................... None........................default
+  weight_by_num_documents ......... False.......................default
+  weight_decay .................... 0.1.........................default
+  weight_server_port .............. 6000........................default
+  weighted_sampler_alpha .......... 1.0.........................default
+  world_size ...................... None........................default
+  z_loss .......................... 0.0.........................default
+---------------- end of arguments ----------------
+NeoXArgs.configure_distributed_args() using world size: 1 and model-parallel size: 2 
+[2026-10-17 11:35:48,787] [WARNING] [runner.py:229:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2026-10-17 11:35:48,787] [INFO] [runner.py:623:main] cmd = /usr/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMV19 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None train.py --deepspeed_config eyJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9fQ== --megatron_config eyJudW1fZ3B1cyI6IDIsICJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9LCAicHJlY2lzaW9uIjogImJmbG9hdDE2IiwgIm51bV9sYXllcnMiOiAxNiwgImhpZGRlbl9zaXplIjogMjA0OCwgIm51bV9hdHRlbnRpb25faGVhZHMiOiAxNiwgInNlcV9sZW5ndGgiOiAyMDQ4LCAibWF4X3Bvc2l0aW9uX2VtYmVkZGluZ3MiOiAyMDQ4LCAicG9zX2VtYiI6ICJyb3RhcnkiLCAiYXR0ZW50aW9uX2NvbmZpZyI6IFsiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giXSwgInNwYXJzaXR5X2NvbmZpZyI6IHt9LCAibWFrZV92b2NhYl9zaXplX2RpdmlzaWJsZV9ieSI6IDEzMTA3MiwgImJpYXNfZHJvcG91dF9mdXNpb24iOiB0cnVlLCAiY3Jvc3NfZW50cm9weV9mdXNpb24iOiB0cnVlLCAiaW5pdF9tZXRob2QiOiAic21hbGxfaW5pdCIsICJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2QiOiAid2FuZ19pbml0IiwgImxyX2RlY2F5X3N0eWxlIjogImNvc2luZSIsICJscl9kZWNheV9pdGVycyI6IDUwLCAibWluX2xyIjogMi41ZS0wNSwgIndhcm11cCI6IDAuMCwgIm9wdGltaXplcl90eXBlIjogIkFkYW0iLCAiemVyb19zdGFnZSI6IDAsICJsciI6IDAuMDAwMjUsICJkYXRhX3BhdGgiOiAiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50IiwgImRhdGFfaW1wbCI6ICJtbWFwIiwgImNvbmZpZ19maWxlcyI6IHsiYmFzZS55bWwiOiAie1xuICBcIm51bV9sYXllcnNcIjogMTYsXG4gIFwiaGlkZGVuX3NpemVcIjogMjA0OCxcbiAgXCJudW1fYXR0ZW50aW9uX2hlYWRzXCI6IDE2LFxuICBcInNlcV9sZW5ndGhcIjogMjA0OCxcbiAgXCJtYXhfcG9zaXRpb25fZW1iZWRkaW5nc1wiOiAyMDQ4LFxuICBcInBvc19lbWJcIjogXCJyb3RhcnlcIixcbiAgXCJyb3RhcnlfcGN0XCI6IDEuMCxcbiAgXCJub193ZWlnaHRfdHlpbmdcIjogZmFsc2UsXG4gIFwiZ3B0X2pfcmVzaWR1YWxcIjogZmFsc2UsXG4gIFwib3V0cHV0X2xheWVyX3BhcmFsbGVsaXNtXCI6IFwiY29sdW1uXCIsXG4gIFwiYXR0ZW50aW9uX2NvbmZpZ1wiOiBbW1tcImZsYXNoXCJdLCAxNl1dLFxuXG4gIFwibm9ybVwiOiBcImxheWVybm9ybVwiLFxuICBcInVzZV9iaWFzX2luX21scFwiOiB0cnVlLFxuICBcInVzZV9iaWFzX2luX25vcm1zXCI6IHRydWUsXG4gIFwidXNlX2JpYXNfaW5fYXR0bl9saW5lYXJcIjogdHJ1ZSxcblxuICBcInNjYWxlZF91cHBlcl90cmlhbmdfbWFza2VkX3NvZnRtYXhfZnVzaW9uXCI6IGZhbHNlLFxuICBcImJpYXNfZ2VsdV9mdXNpb25cIjogZmFsc2UsXG4gIFwiYmlhc19kcm9wb3V0X2Z1c2lvblwiOiB0cnVlLFxuICBcInJvcGVfZnVzaW9uXCI6IGZhbHNlLFxuICBcImxheWVybm9ybV9mdXNpb25cIjogZmFsc2UsXG5cbiAgXCJpbml0X21ldGhvZFwiOiBcInNtYWxsX2luaXRcIixcbiAgXCJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2RcIjogXCJ3YW5nX2luaXRcIixcblxuICBcIm9wdGltaXplclwiOiB7XG4gICAgXCJ0eXBlXCI6IFwiQWRhbVwiLFxuICAgIFwicGFyYW1zXCI6IHtcbiAgICAgIFwibHJcIjogMC4wMDAyNSxcbiAgICAgIFwiYmV0YXNcIjogWzAuOSwgMC45NV0sXG4gICAgICBcImVwc1wiOiAxLjBlLThcbiAgICB9XG4gIH0sXG4gIFwibWluX2xyXCI6IDAuMDAwMDI1LFxuICBcInplcm9fb3B0aW1pemF0aW9uXCI6IHtcbiAgICBcInN0YWdlXCI6IDAsXG4gICAgXCJhbGxnYXRoZXJfcGFydGl0aW9uc1wiOiB0cnVlLFxuICAgIFwiYWxsZ2F0aGVyX2J1Y2tldF9zaXplXCI6IDUwMDAwMDAwMCxcbiAgICBcIm92ZXJsYXBfY29tbVwiOiB0cnVlLFxuICAgIFwicmVkdWNlX3NjYXR0ZXJcIjogdHJ1ZSxcbiAgICBcInJlZHVjZV9idWNrZXRfc2l6ZVwiOiA1MDAwMDAwMDAsXG4gICAgXCJjb250aWd1b3VzX2dyYWRpZW50c1wiOiB0cnVlLFxuICAgIFwiY3B1X29mZmxvYWRcIjogZmFsc2VcbiAgfSxcblxuICBcInByZWNpc2lvblwiOiBcImJmbG9hdDE2XCIsXG4gIFwiYmYxNlwiOiB7XG4gICAgXCJlbmFibGVkXCI6IHRydWVcbiAgfSxcbiAgXCJkYXRhX3R5cGVzXCI6IHtcbiAgICBcImdyYWRfYWNjdW1fZHR5cGVcIjogXCJmcDMyXCJcbiAgfSxcbiAgXCJmcDMyX2FsbHJlZHVjZVwiOiB0cnVlLFxuXG4gIFwidHJhaW5fbWljcm9fYmF0Y2hfc2l6ZV9wZXJfZ3B1XCI6IDQsXG4gIFwiZ3JhZGllbnRfYWNjdW11bGF0aW9uX3N0ZXBzXCI6IDEsXG4gIFwiZGF0YV9wYXRoXCI6IFwiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50XCIsXG4gIFwiZGF0YV9pbXBsXCI6IFwibW1hcFwiLFxuICBcImRhdGFzZXRfaW1wbFwiOiBcImdwdDJcIixcbiAgXCJwYWNrX2ltcGxcIjogXCJwYWNrZWRcIixcbiAgXCJzcGxpdFwiOiBcIjkwLDUsNVwiLFxuICBcInRva2VuaXplcl90eXBlXCI6IFwiR1BUMkJQRVRva2VuaXplclwiLFxuICBcInZvY2FiX2ZpbGVcIjogXCIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi12b2NhYi5qc29uXCIsXG4gIFwibWVyZ2VfZmlsZVwiOiBcIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLW1lcmdlcy50eHRcIixcbiAgXCJudW1fd29ya2Vyc1wiOiAyLFxuXG4gIFwiY2hlY2twb2ludF9hY3RpdmF0aW9uc1wiOiB0cnVlLFxuICBcImNoZWNrcG9pbnRfbnVtX2xheWVyc1wiOiAxLFxuICBcInBhcnRpdGlvbl9hY3RpdmF0aW9uc1wiOiBmYWxzZSxcbiAgXCJzeW5jaHJvbml6ZV9lYWNoX2xheWVyXCI6IGZhbHNlLFxuXG4gIFwiZ3JhZGllbnRfY2xpcHBpbmdcIjogMS4wLFxuICBcIndlaWdodF9kZWNheVwiOiAwLjEsXG4gIFwiaGlkZGVuX2Ryb3BvdXRcIjogMC4wLFxuICBcImF0dGVudGlvbl9kcm9wb3V0XCI6IDAuMCxcblxuICBcImRpc3RyaWJ1dGVkX2JhY2tlbmRcIjogXCJuY2NsXCIsXG4gIFwibHJfZGVjYXlfc3R5bGVcIjogXCJjb3NpbmVcIixcbiAgXCJ3YXJtdXBcIjogMC4wLFxuICBcImNoZWNrcG9pbnRfZmFjdG9yXCI6IDEwMDAsXG4gIFwiZXh0cmFfc2F2ZV9pdGVyc1wiOiBbXSxcbiAgXCJldmFsX2ludGVydmFsXCI6IDEwMDAsXG4gIFwiZXZhbF9pdGVyc1wiOiAwLFxuXG4gIFwic2F2ZVwiOiBudWxsLFxuICBcImxvYWRcIjogbnVsbCxcbiAgXCJjaGVja3BvaW50X3ZhbGlkYXRpb25fd2l0aF9mb3J3YXJkX3Bhc3NcIjogZmFsc2UsXG4gIFwidXNlX3dhbmRiXCI6IHRydWUsXG4gIFwid2FuZGJfaG9zdFwiOiBcImh0dHBzOi8vYXBpLndhbmRiLmFpXCIsXG4gIFwic2VlZFwiOiAxMjM0LFxuICBcImxvZ19pbnRlcnZhbFwiOiAxLFxuICBcInN0ZXBzX3Blcl9wcmludFwiOiAxLFxuICBcIndhbGxfY2xvY2tfYnJlYWtkb3duXCI6IGZhbHNlXG59XG4iLCAidHAyLnltbCI6ICJ7XG4gIFwibnVtX2dwdXNcIjogMixcbiAgXCJwaXBlX3BhcmFsbGVsX3NpemVcIjogMSxcbiAgXCJtb2RlbF9wYXJhbGxlbF9zaXplXCI6IDIsXG4gIFwic2VxdWVuY2VfcGFyYWxsZWxcIjogZmFsc2Vcbn1cblxuIiwgImZ1c2VkLnltbCI6ICJ7XG4gIFwiY3Jvc3NfZW50cm9weV9mdXNpb25cIjogdHJ1ZVxufVxuXG4iLCAiZnVzZWRfY2VfdGVzdF9vdmVycmlkZXNfdHAyX2Z1c2VkLnltbCI6ICJ7XCJ0cmFpbl9pdGVyc1wiOiA1MCwgXCJscl9kZWNheV9pdGVyc1wiOiA1MCwgXCJtYWtlX3ZvY2FiX3NpemVfZGl2aXNpYmxlX2J5XCI6IDEzMTA3MiwgXCJ3YW5kYl9wcm9qZWN0XCI6IFwiZ3B0LW5lb3gtZnVzZWQtY3Jvc3MtZW50cm9weS1pc3N1ZS0xNDQ0XCIsIFwid2FuZGJfZ3JvdXBcIjogXCIxYi13aWtpdGV4dDItdHAyLXZvY2FiMjYyMTQ0LTIwMjYxMDE3VDExMzQwN1pcIiwgXCJ3YW5kYl9ydW5fbmFtZVwiOiBcIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZFwifVxuIn0sICJjaGVja3BvaW50X2ZhY3RvciI6IDEwMDAsICJleHRyYV9zYXZlX2l0ZXJzIjogW10sICJiYXRjaF9zaXplIjogNCwgInRyYWluX2l0ZXJzIjogNTAsICJldmFsX2l0ZXJzIjogMCwgInNwbGl0IjogIjkwLDUsNSIsICJ2b2NhYl9maWxlIjogIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLXZvY2FiLmpzb24iLCAibWVyZ2VfZmlsZSI6ICIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi1tZXJnZXMudHh0IiwgImNoZWNrcG9pbnRfYWN0aXZhdGlvbnMiOiB0cnVlLCAiZHluYW1pY19sb3NzX3NjYWxlIjogdHJ1ZSwgInBpcGVfcGFyYWxsZWxfc2l6ZSI6IDEsICJtb2RlbF9wYXJhbGxlbF9zaXplIjogMiwgIndvcmxkX3NpemUiOiAxLCAiaXNfcGlwZV9wYXJhbGxlbCI6IHRydWUsICJ1c2Vfd2FuZGIiOiB0cnVlLCAid2FuZGJfZ3JvdXAiOiAiMWItd2lraXRleHQyLXRwMi12b2NhYjI2MjE0NC0yMDI2MTAxN1QxMTM0MDdaXzdnazF1NHhhX2ltdDczdHFsIiwgIndhbmRiX3J1bl9uYW1lIjogIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZCIsICJ3YW5kYl9wcm9qZWN0IjogImdwdC1uZW94LWZ1c2VkLWNyb3NzLWVudHJvcHktaXNzdWUtMTQ0NCIsICJsb2dfaW50ZXJ2YWwiOiAxLCAidGV4dF9nZW5fdHlwZSI6ICJ1bmNvbmRpdGlvbmFsIiwgImxvY2FsX3JhbmsiOiAwLCAicmFuayI6IDAsICJ1c2VyX3NjcmlwdCI6ICJ0cmFpbi5weSIsICJnbG9iYWxfbnVtX2dwdXMiOiAyfQ==
+[2026-10-17 11:35:50,373] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-10-17 11:35:54,019] [INFO] [launch.py:139:main] 0 NCCL_VERSION=2.19.stable.20231214+cuda12.3
+[2026-10-17 11:35:54,019] [INFO] [launch.py:146:main] WORLD INFO DICT: {'localhost': [0, 1]}
+[2026-10-17 11:35:54,019] [INFO] [launch.py:152:main] nnodes=1, num_local_procs=2, node_rank=0
+[2026-10-17 11:35:54,019] [INFO] [launch.py:163:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1]})
+[2026-10-17 11:35:54,019] [INFO] [launch.py:164:main] dist_world_size=2
+[2026-10-17 11:35:54,019] [INFO] [launch.py:168:main] Setting CUDA_VISIBLE_DEVICES=0,1
+[2026-10-17 11:35:54,022] [INFO] [launch.py:256:main] process 1521 spawned with command: ['/usr/bin/python', '-u', 'train.py', '--local_rank=0', '--deepspeed_config', 'eyJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9fQ==', '--megatron_config', 'eyJudW1fZ3B1cyI6IDIsICJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9LCAicHJlY2lzaW9uIjogImJmbG9hdDE2IiwgIm51bV9sYXllcnMiOiAxNiwgImhpZGRlbl9zaXplIjogMjA0OCwgIm51bV9hdHRlbnRpb25faGVhZHMiOiAxNiwgInNlcV9sZW5ndGgiOiAyMDQ4LCAibWF4X3Bvc2l0aW9uX2VtYmVkZGluZ3MiOiAyMDQ4LCAicG9zX2VtYiI6ICJyb3RhcnkiLCAiYXR0ZW50aW9uX2NvbmZpZyI6IFsiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giXSwgInNwYXJzaXR5X2NvbmZpZyI6IHt9LCAibWFrZV92b2NhYl9zaXplX2RpdmlzaWJsZV9ieSI6IDEzMTA3MiwgImJpYXNfZHJvcG91dF9mdXNpb24iOiB0cnVlLCAiY3Jvc3NfZW50cm9weV9mdXNpb24iOiB0cnVlLCAiaW5pdF9tZXRob2QiOiAic21hbGxfaW5pdCIsICJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2QiOiAid2FuZ19pbml0IiwgImxyX2RlY2F5X3N0eWxlIjogImNvc2luZSIsICJscl9kZWNheV9pdGVycyI6IDUwLCAibWluX2xyIjogMi41ZS0wNSwgIndhcm11cCI6IDAuMCwgIm9wdGltaXplcl90eXBlIjogIkFkYW0iLCAiemVyb19zdGFnZSI6IDAsICJsciI6IDAuMDAwMjUsICJkYXRhX3BhdGgiOiAiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50IiwgImRhdGFfaW1wbCI6ICJtbWFwIiwgImNvbmZpZ19maWxlcyI6IHsiYmFzZS55bWwiOiAie1xuICBcIm51bV9sYXllcnNcIjogMTYsXG4gIFwiaGlkZGVuX3NpemVcIjogMjA0OCxcbiAgXCJudW1fYXR0ZW50aW9uX2hlYWRzXCI6IDE2LFxuICBcInNlcV9sZW5ndGhcIjogMjA0OCxcbiAgXCJtYXhfcG9zaXRpb25fZW1iZWRkaW5nc1wiOiAyMDQ4LFxuICBcInBvc19lbWJcIjogXCJyb3RhcnlcIixcbiAgXCJyb3RhcnlfcGN0XCI6IDEuMCxcbiAgXCJub193ZWlnaHRfdHlpbmdcIjogZmFsc2UsXG4gIFwiZ3B0X2pfcmVzaWR1YWxcIjogZmFsc2UsXG4gIFwib3V0cHV0X2xheWVyX3BhcmFsbGVsaXNtXCI6IFwiY29sdW1uXCIsXG4gIFwiYXR0ZW50aW9uX2NvbmZpZ1wiOiBbW1tcImZsYXNoXCJdLCAxNl1dLFxuXG4gIFwibm9ybVwiOiBcImxheWVybm9ybVwiLFxuICBcInVzZV9iaWFzX2luX21scFwiOiB0cnVlLFxuICBcInVzZV9iaWFzX2luX25vcm1zXCI6IHRydWUsXG4gIFwidXNlX2JpYXNfaW5fYXR0bl9saW5lYXJcIjogdHJ1ZSxcblxuICBcInNjYWxlZF91cHBlcl90cmlhbmdfbWFza2VkX3NvZnRtYXhfZnVzaW9uXCI6IGZhbHNlLFxuICBcImJpYXNfZ2VsdV9mdXNpb25cIjogZmFsc2UsXG4gIFwiYmlhc19kcm9wb3V0X2Z1c2lvblwiOiB0cnVlLFxuICBcInJvcGVfZnVzaW9uXCI6IGZhbHNlLFxuICBcImxheWVybm9ybV9mdXNpb25cIjogZmFsc2UsXG5cbiAgXCJpbml0X21ldGhvZFwiOiBcInNtYWxsX2luaXRcIixcbiAgXCJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2RcIjogXCJ3YW5nX2luaXRcIixcblxuICBcIm9wdGltaXplclwiOiB7XG4gICAgXCJ0eXBlXCI6IFwiQWRhbVwiLFxuICAgIFwicGFyYW1zXCI6IHtcbiAgICAgIFwibHJcIjogMC4wMDAyNSxcbiAgICAgIFwiYmV0YXNcIjogWzAuOSwgMC45NV0sXG4gICAgICBcImVwc1wiOiAxLjBlLThcbiAgICB9XG4gIH0sXG4gIFwibWluX2xyXCI6IDAuMDAwMDI1LFxuICBcInplcm9fb3B0aW1pemF0aW9uXCI6IHtcbiAgICBcInN0YWdlXCI6IDAsXG4gICAgXCJhbGxnYXRoZXJfcGFydGl0aW9uc1wiOiB0cnVlLFxuICAgIFwiYWxsZ2F0aGVyX2J1Y2tldF9zaXplXCI6IDUwMDAwMDAwMCxcbiAgICBcIm92ZXJsYXBfY29tbVwiOiB0cnVlLFxuICAgIFwicmVkdWNlX3NjYXR0ZXJcIjogdHJ1ZSxcbiAgICBcInJlZHVjZV9idWNrZXRfc2l6ZVwiOiA1MDAwMDAwMDAsXG4gICAgXCJjb250aWd1b3VzX2dyYWRpZW50c1wiOiB0cnVlLFxuICAgIFwiY3B1X29mZmxvYWRcIjogZmFsc2VcbiAgfSxcblxuICBcInByZWNpc2lvblwiOiBcImJmbG9hdDE2XCIsXG4gIFwiYmYxNlwiOiB7XG4gICAgXCJlbmFibGVkXCI6IHRydWVcbiAgfSxcbiAgXCJkYXRhX3R5cGVzXCI6IHtcbiAgICBcImdyYWRfYWNjdW1fZHR5cGVcIjogXCJmcDMyXCJcbiAgfSxcbiAgXCJmcDMyX2FsbHJlZHVjZVwiOiB0cnVlLFxuXG4gIFwidHJhaW5fbWljcm9fYmF0Y2hfc2l6ZV9wZXJfZ3B1XCI6IDQsXG4gIFwiZ3JhZGllbnRfYWNjdW11bGF0aW9uX3N0ZXBzXCI6IDEsXG4gIFwiZGF0YV9wYXRoXCI6IFwiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50XCIsXG4gIFwiZGF0YV9pbXBsXCI6IFwibW1hcFwiLFxuICBcImRhdGFzZXRfaW1wbFwiOiBcImdwdDJcIixcbiAgXCJwYWNrX2ltcGxcIjogXCJwYWNrZWRcIixcbiAgXCJzcGxpdFwiOiBcIjkwLDUsNVwiLFxuICBcInRva2VuaXplcl90eXBlXCI6IFwiR1BUMkJQRVRva2VuaXplclwiLFxuICBcInZvY2FiX2ZpbGVcIjogXCIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi12b2NhYi5qc29uXCIsXG4gIFwibWVyZ2VfZmlsZVwiOiBcIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLW1lcmdlcy50eHRcIixcbiAgXCJudW1fd29ya2Vyc1wiOiAyLFxuXG4gIFwiY2hlY2twb2ludF9hY3RpdmF0aW9uc1wiOiB0cnVlLFxuICBcImNoZWNrcG9pbnRfbnVtX2xheWVyc1wiOiAxLFxuICBcInBhcnRpdGlvbl9hY3RpdmF0aW9uc1wiOiBmYWxzZSxcbiAgXCJzeW5jaHJvbml6ZV9lYWNoX2xheWVyXCI6IGZhbHNlLFxuXG4gIFwiZ3JhZGllbnRfY2xpcHBpbmdcIjogMS4wLFxuICBcIndlaWdodF9kZWNheVwiOiAwLjEsXG4gIFwiaGlkZGVuX2Ryb3BvdXRcIjogMC4wLFxuICBcImF0dGVudGlvbl9kcm9wb3V0XCI6IDAuMCxcblxuICBcImRpc3RyaWJ1dGVkX2JhY2tlbmRcIjogXCJuY2NsXCIsXG4gIFwibHJfZGVjYXlfc3R5bGVcIjogXCJjb3NpbmVcIixcbiAgXCJ3YXJtdXBcIjogMC4wLFxuICBcImNoZWNrcG9pbnRfZmFjdG9yXCI6IDEwMDAsXG4gIFwiZXh0cmFfc2F2ZV9pdGVyc1wiOiBbXSxcbiAgXCJldmFsX2ludGVydmFsXCI6IDEwMDAsXG4gIFwiZXZhbF9pdGVyc1wiOiAwLFxuXG4gIFwic2F2ZVwiOiBudWxsLFxuICBcImxvYWRcIjogbnVsbCxcbiAgXCJjaGVja3BvaW50X3ZhbGlkYXRpb25fd2l0aF9mb3J3YXJkX3Bhc3NcIjogZmFsc2UsXG4gIFwidXNlX3dhbmRiXCI6IHRydWUsXG4gIFwid2FuZGJfaG9zdFwiOiBcImh0dHBzOi8vYXBpLndhbmRiLmFpXCIsXG4gIFwic2VlZFwiOiAxMjM0LFxuICBcImxvZ19pbnRlcnZhbFwiOiAxLFxuICBcInN0ZXBzX3Blcl9wcmludFwiOiAxLFxuICBcIndhbGxfY2xvY2tfYnJlYWtkb3duXCI6IGZhbHNlXG59XG4iLCAidHAyLnltbCI6ICJ7XG4gIFwibnVtX2dwdXNcIjogMixcbiAgXCJwaXBlX3BhcmFsbGVsX3NpemVcIjogMSxcbiAgXCJtb2RlbF9wYXJhbGxlbF9zaXplXCI6IDIsXG4gIFwic2VxdWVuY2VfcGFyYWxsZWxcIjogZmFsc2Vcbn1cblxuIiwgImZ1c2VkLnltbCI6ICJ7XG4gIFwiY3Jvc3NfZW50cm9weV9mdXNpb25cIjogdHJ1ZVxufVxuXG4iLCAiZnVzZWRfY2VfdGVzdF9vdmVycmlkZXNfdHAyX2Z1c2VkLnltbCI6ICJ7XCJ0cmFpbl9pdGVyc1wiOiA1MCwgXCJscl9kZWNheV9pdGVyc1wiOiA1MCwgXCJtYWtlX3ZvY2FiX3NpemVfZGl2aXNpYmxlX2J5XCI6IDEzMTA3MiwgXCJ3YW5kYl9wcm9qZWN0XCI6IFwiZ3B0LW5lb3gtZnVzZWQtY3Jvc3MtZW50cm9weS1pc3N1ZS0xNDQ0XCIsIFwid2FuZGJfZ3JvdXBcIjogXCIxYi13aWtpdGV4dDItdHAyLXZvY2FiMjYyMTQ0LTIwMjYxMDE3VDExMzQwN1pcIiwgXCJ3YW5kYl9ydW5fbmFtZVwiOiBcIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZFwifVxuIn0sICJjaGVja3BvaW50X2ZhY3RvciI6IDEwMDAsICJleHRyYV9zYXZlX2l0ZXJzIjogW10sICJiYXRjaF9zaXplIjogNCwgInRyYWluX2l0ZXJzIjogNTAsICJldmFsX2l0ZXJzIjogMCwgInNwbGl0IjogIjkwLDUsNSIsICJ2b2NhYl9maWxlIjogIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLXZvY2FiLmpzb24iLCAibWVyZ2VfZmlsZSI6ICIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi1tZXJnZXMudHh0IiwgImNoZWNrcG9pbnRfYWN0aXZhdGlvbnMiOiB0cnVlLCAiZHluYW1pY19sb3NzX3NjYWxlIjogdHJ1ZSwgInBpcGVfcGFyYWxsZWxfc2l6ZSI6IDEsICJtb2RlbF9wYXJhbGxlbF9zaXplIjogMiwgIndvcmxkX3NpemUiOiAxLCAiaXNfcGlwZV9wYXJhbGxlbCI6IHRydWUsICJ1c2Vfd2FuZGIiOiB0cnVlLCAid2FuZGJfZ3JvdXAiOiAiMWItd2lraXRleHQyLXRwMi12b2NhYjI2MjE0NC0yMDI2MTAxN1QxMTM0MDdaXzdnazF1NHhhX2ltdDczdHFsIiwgIndhbmRiX3J1bl9uYW1lIjogIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZCIsICJ3YW5kYl9wcm9qZWN0IjogImdwdC1uZW94LWZ1c2VkLWNyb3NzLWVudHJvcHktaXNzdWUtMTQ0NCIsICJsb2dfaW50ZXJ2YWwiOiAxLCAidGV4dF9nZW5fdHlwZSI6ICJ1bmNvbmRpdGlvbmFsIiwgImxvY2FsX3JhbmsiOiAwLCAicmFuayI6IDAsICJ1c2VyX3NjcmlwdCI6ICJ0cmFpbi5weSIsICJnbG9iYWxfbnVtX2dwdXMiOiAyfQ==']
+[2026-10-17 11:35:54,024] [INFO] [launch.py:256:main] process 1522 spawned with command: ['/usr/bin/python', '-u', 'train.py', '--local_rank=1', '--deepspeed_config', 'eyJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9fQ==', '--megatron_config', 'eyJudW1fZ3B1cyI6IDIsICJ0cmFpbl9iYXRjaF9zaXplIjogNCwgInRyYWluX21pY3JvX2JhdGNoX3NpemVfcGVyX2dwdSI6IDQsICJvcHRpbWl6ZXIiOiB7InR5cGUiOiAiQWRhbSIsICJwYXJhbXMiOiB7ImxyIjogMC4wMDAyNSwgImJldGFzIjogWzAuOSwgMC45NV0sICJlcHMiOiAxZS0wOH19LCAiZnAzMl9hbGxyZWR1Y2UiOiB0cnVlLCAiYmYxNiI6IHsiZW5hYmxlZCI6IHRydWV9LCAiZ3JhZGllbnRfY2xpcHBpbmciOiAxLjAsICJ6ZXJvX29wdGltaXphdGlvbiI6IHsic3RhZ2UiOiAwLCAiYWxsZ2F0aGVyX3BhcnRpdGlvbnMiOiB0cnVlLCAiYWxsZ2F0aGVyX2J1Y2tldF9zaXplIjogNTAwMDAwMDAwLCAib3ZlcmxhcF9jb21tIjogdHJ1ZSwgInJlZHVjZV9zY2F0dGVyIjogdHJ1ZSwgInJlZHVjZV9idWNrZXRfc2l6ZSI6IDUwMDAwMDAwMCwgImNvbnRpZ3VvdXNfZ3JhZGllbnRzIjogdHJ1ZSwgImNwdV9vZmZsb2FkIjogZmFsc2V9LCAic3RlcHNfcGVyX3ByaW50IjogMSwgImRhdGFfdHlwZXMiOiB7ImdyYWRfYWNjdW1fZHR5cGUiOiAiZnAzMiJ9LCAicHJlY2lzaW9uIjogImJmbG9hdDE2IiwgIm51bV9sYXllcnMiOiAxNiwgImhpZGRlbl9zaXplIjogMjA0OCwgIm51bV9hdHRlbnRpb25faGVhZHMiOiAxNiwgInNlcV9sZW5ndGgiOiAyMDQ4LCAibWF4X3Bvc2l0aW9uX2VtYmVkZGluZ3MiOiAyMDQ4LCAicG9zX2VtYiI6ICJyb3RhcnkiLCAiYXR0ZW50aW9uX2NvbmZpZyI6IFsiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giLCAiZmxhc2giXSwgInNwYXJzaXR5X2NvbmZpZyI6IHt9LCAibWFrZV92b2NhYl9zaXplX2RpdmlzaWJsZV9ieSI6IDEzMTA3MiwgImJpYXNfZHJvcG91dF9mdXNpb24iOiB0cnVlLCAiY3Jvc3NfZW50cm9weV9mdXNpb24iOiB0cnVlLCAiaW5pdF9tZXRob2QiOiAic21hbGxfaW5pdCIsICJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2QiOiAid2FuZ19pbml0IiwgImxyX2RlY2F5X3N0eWxlIjogImNvc2luZSIsICJscl9kZWNheV9pdGVycyI6IDUwLCAibWluX2xyIjogMi41ZS0wNSwgIndhcm11cCI6IDAuMCwgIm9wdGltaXplcl90eXBlIjogIkFkYW0iLCAiemVyb19zdGFnZSI6IDAsICJsciI6IDAuMDAwMjUsICJkYXRhX3BhdGgiOiAiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50IiwgImRhdGFfaW1wbCI6ICJtbWFwIiwgImNvbmZpZ19maWxlcyI6IHsiYmFzZS55bWwiOiAie1xuICBcIm51bV9sYXllcnNcIjogMTYsXG4gIFwiaGlkZGVuX3NpemVcIjogMjA0OCxcbiAgXCJudW1fYXR0ZW50aW9uX2hlYWRzXCI6IDE2LFxuICBcInNlcV9sZW5ndGhcIjogMjA0OCxcbiAgXCJtYXhfcG9zaXRpb25fZW1iZWRkaW5nc1wiOiAyMDQ4LFxuICBcInBvc19lbWJcIjogXCJyb3RhcnlcIixcbiAgXCJyb3RhcnlfcGN0XCI6IDEuMCxcbiAgXCJub193ZWlnaHRfdHlpbmdcIjogZmFsc2UsXG4gIFwiZ3B0X2pfcmVzaWR1YWxcIjogZmFsc2UsXG4gIFwib3V0cHV0X2xheWVyX3BhcmFsbGVsaXNtXCI6IFwiY29sdW1uXCIsXG4gIFwiYXR0ZW50aW9uX2NvbmZpZ1wiOiBbW1tcImZsYXNoXCJdLCAxNl1dLFxuXG4gIFwibm9ybVwiOiBcImxheWVybm9ybVwiLFxuICBcInVzZV9iaWFzX2luX21scFwiOiB0cnVlLFxuICBcInVzZV9iaWFzX2luX25vcm1zXCI6IHRydWUsXG4gIFwidXNlX2JpYXNfaW5fYXR0bl9saW5lYXJcIjogdHJ1ZSxcblxuICBcInNjYWxlZF91cHBlcl90cmlhbmdfbWFza2VkX3NvZnRtYXhfZnVzaW9uXCI6IGZhbHNlLFxuICBcImJpYXNfZ2VsdV9mdXNpb25cIjogZmFsc2UsXG4gIFwiYmlhc19kcm9wb3V0X2Z1c2lvblwiOiB0cnVlLFxuICBcInJvcGVfZnVzaW9uXCI6IGZhbHNlLFxuICBcImxheWVybm9ybV9mdXNpb25cIjogZmFsc2UsXG5cbiAgXCJpbml0X21ldGhvZFwiOiBcInNtYWxsX2luaXRcIixcbiAgXCJvdXRwdXRfbGF5ZXJfaW5pdF9tZXRob2RcIjogXCJ3YW5nX2luaXRcIixcblxuICBcIm9wdGltaXplclwiOiB7XG4gICAgXCJ0eXBlXCI6IFwiQWRhbVwiLFxuICAgIFwicGFyYW1zXCI6IHtcbiAgICAgIFwibHJcIjogMC4wMDAyNSxcbiAgICAgIFwiYmV0YXNcIjogWzAuOSwgMC45NV0sXG4gICAgICBcImVwc1wiOiAxLjBlLThcbiAgICB9XG4gIH0sXG4gIFwibWluX2xyXCI6IDAuMDAwMDI1LFxuICBcInplcm9fb3B0aW1pemF0aW9uXCI6IHtcbiAgICBcInN0YWdlXCI6IDAsXG4gICAgXCJhbGxnYXRoZXJfcGFydGl0aW9uc1wiOiB0cnVlLFxuICAgIFwiYWxsZ2F0aGVyX2J1Y2tldF9zaXplXCI6IDUwMDAwMDAwMCxcbiAgICBcIm92ZXJsYXBfY29tbVwiOiB0cnVlLFxuICAgIFwicmVkdWNlX3NjYXR0ZXJcIjogdHJ1ZSxcbiAgICBcInJlZHVjZV9idWNrZXRfc2l6ZVwiOiA1MDAwMDAwMDAsXG4gICAgXCJjb250aWd1b3VzX2dyYWRpZW50c1wiOiB0cnVlLFxuICAgIFwiY3B1X29mZmxvYWRcIjogZmFsc2VcbiAgfSxcblxuICBcInByZWNpc2lvblwiOiBcImJmbG9hdDE2XCIsXG4gIFwiYmYxNlwiOiB7XG4gICAgXCJlbmFibGVkXCI6IHRydWVcbiAgfSxcbiAgXCJkYXRhX3R5cGVzXCI6IHtcbiAgICBcImdyYWRfYWNjdW1fZHR5cGVcIjogXCJmcDMyXCJcbiAgfSxcbiAgXCJmcDMyX2FsbHJlZHVjZVwiOiB0cnVlLFxuXG4gIFwidHJhaW5fbWljcm9fYmF0Y2hfc2l6ZV9wZXJfZ3B1XCI6IDQsXG4gIFwiZ3JhZGllbnRfYWNjdW11bGF0aW9uX3N0ZXBzXCI6IDEsXG4gIFwiZGF0YV9wYXRoXCI6IFwiL3dvcmtzcGFjZS9ncHQtbmVveC9sb2dzL2ludGVyX2RvY3VtZW50X2F0dGVudGlvbl8xYl9zbW9rZS9kYXRhL3dpa2l0ZXh0Ml9yYXcvd2lraXRleHQyX3Jhd190ZXh0X2RvY3VtZW50XCIsXG4gIFwiZGF0YV9pbXBsXCI6IFwibW1hcFwiLFxuICBcImRhdGFzZXRfaW1wbFwiOiBcImdwdDJcIixcbiAgXCJwYWNrX2ltcGxcIjogXCJwYWNrZWRcIixcbiAgXCJzcGxpdFwiOiBcIjkwLDUsNVwiLFxuICBcInRva2VuaXplcl90eXBlXCI6IFwiR1BUMkJQRVRva2VuaXplclwiLFxuICBcInZvY2FiX2ZpbGVcIjogXCIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi12b2NhYi5qc29uXCIsXG4gIFwibWVyZ2VfZmlsZVwiOiBcIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLW1lcmdlcy50eHRcIixcbiAgXCJudW1fd29ya2Vyc1wiOiAyLFxuXG4gIFwiY2hlY2twb2ludF9hY3RpdmF0aW9uc1wiOiB0cnVlLFxuICBcImNoZWNrcG9pbnRfbnVtX2xheWVyc1wiOiAxLFxuICBcInBhcnRpdGlvbl9hY3RpdmF0aW9uc1wiOiBmYWxzZSxcbiAgXCJzeW5jaHJvbml6ZV9lYWNoX2xheWVyXCI6IGZhbHNlLFxuXG4gIFwiZ3JhZGllbnRfY2xpcHBpbmdcIjogMS4wLFxuICBcIndlaWdodF9kZWNheVwiOiAwLjEsXG4gIFwiaGlkZGVuX2Ryb3BvdXRcIjogMC4wLFxuICBcImF0dGVudGlvbl9kcm9wb3V0XCI6IDAuMCxcblxuICBcImRpc3RyaWJ1dGVkX2JhY2tlbmRcIjogXCJuY2NsXCIsXG4gIFwibHJfZGVjYXlfc3R5bGVcIjogXCJjb3NpbmVcIixcbiAgXCJ3YXJtdXBcIjogMC4wLFxuICBcImNoZWNrcG9pbnRfZmFjdG9yXCI6IDEwMDAsXG4gIFwiZXh0cmFfc2F2ZV9pdGVyc1wiOiBbXSxcbiAgXCJldmFsX2ludGVydmFsXCI6IDEwMDAsXG4gIFwiZXZhbF9pdGVyc1wiOiAwLFxuXG4gIFwic2F2ZVwiOiBudWxsLFxuICBcImxvYWRcIjogbnVsbCxcbiAgXCJjaGVja3BvaW50X3ZhbGlkYXRpb25fd2l0aF9mb3J3YXJkX3Bhc3NcIjogZmFsc2UsXG4gIFwidXNlX3dhbmRiXCI6IHRydWUsXG4gIFwid2FuZGJfaG9zdFwiOiBcImh0dHBzOi8vYXBpLndhbmRiLmFpXCIsXG4gIFwic2VlZFwiOiAxMjM0LFxuICBcImxvZ19pbnRlcnZhbFwiOiAxLFxuICBcInN0ZXBzX3Blcl9wcmludFwiOiAxLFxuICBcIndhbGxfY2xvY2tfYnJlYWtkb3duXCI6IGZhbHNlXG59XG4iLCAidHAyLnltbCI6ICJ7XG4gIFwibnVtX2dwdXNcIjogMixcbiAgXCJwaXBlX3BhcmFsbGVsX3NpemVcIjogMSxcbiAgXCJtb2RlbF9wYXJhbGxlbF9zaXplXCI6IDIsXG4gIFwic2VxdWVuY2VfcGFyYWxsZWxcIjogZmFsc2Vcbn1cblxuIiwgImZ1c2VkLnltbCI6ICJ7XG4gIFwiY3Jvc3NfZW50cm9weV9mdXNpb25cIjogdHJ1ZVxufVxuXG4iLCAiZnVzZWRfY2VfdGVzdF9vdmVycmlkZXNfdHAyX2Z1c2VkLnltbCI6ICJ7XCJ0cmFpbl9pdGVyc1wiOiA1MCwgXCJscl9kZWNheV9pdGVyc1wiOiA1MCwgXCJtYWtlX3ZvY2FiX3NpemVfZGl2aXNpYmxlX2J5XCI6IDEzMTA3MiwgXCJ3YW5kYl9wcm9qZWN0XCI6IFwiZ3B0LW5lb3gtZnVzZWQtY3Jvc3MtZW50cm9weS1pc3N1ZS0xNDQ0XCIsIFwid2FuZGJfZ3JvdXBcIjogXCIxYi13aWtpdGV4dDItdHAyLXZvY2FiMjYyMTQ0LTIwMjYxMDE3VDExMzQwN1pcIiwgXCJ3YW5kYl9ydW5fbmFtZVwiOiBcIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZFwifVxuIn0sICJjaGVja3BvaW50X2ZhY3RvciI6IDEwMDAsICJleHRyYV9zYXZlX2l0ZXJzIjogW10sICJiYXRjaF9zaXplIjogNCwgInRyYWluX2l0ZXJzIjogNTAsICJldmFsX2l0ZXJzIjogMCwgInNwbGl0IjogIjkwLDUsNSIsICJ2b2NhYl9maWxlIjogIi93b3Jrc3BhY2UvZ3B0LW5lb3gvbG9ncy9pbnRlcl9kb2N1bWVudF9hdHRlbnRpb25fMWJfc21va2UvZGF0YS9ncHQyLXZvY2FiLmpzb24iLCAibWVyZ2VfZmlsZSI6ICIvd29ya3NwYWNlL2dwdC1uZW94L2xvZ3MvaW50ZXJfZG9jdW1lbnRfYXR0ZW50aW9uXzFiX3Ntb2tlL2RhdGEvZ3B0Mi1tZXJnZXMudHh0IiwgImNoZWNrcG9pbnRfYWN0aXZhdGlvbnMiOiB0cnVlLCAiZHluYW1pY19sb3NzX3NjYWxlIjogdHJ1ZSwgInBpcGVfcGFyYWxsZWxfc2l6ZSI6IDEsICJtb2RlbF9wYXJhbGxlbF9zaXplIjogMiwgIndvcmxkX3NpemUiOiAxLCAiaXNfcGlwZV9wYXJhbGxlbCI6IHRydWUsICJ1c2Vfd2FuZGIiOiB0cnVlLCAid2FuZGJfZ3JvdXAiOiAiMWItd2lraXRleHQyLXRwMi12b2NhYjI2MjE0NC0yMDI2MTAxN1QxMTM0MDdaXzdnazF1NHhhX2ltdDczdHFsIiwgIndhbmRiX3J1bl9uYW1lIjogIjFiLXdpa2l0ZXh0Mi10cDItdm9jYWIyNjIxNDQtMjAyNjEwMTdUMTEzNDA3Wi1mdXNlZCIsICJ3YW5kYl9wcm9qZWN0IjogImdwdC1uZW94LWZ1c2VkLWNyb3NzLWVudHJvcHktaXNzdWUtMTQ0NCIsICJsb2dfaW50ZXJ2YWwiOiAxLCAidGV4dF9nZW5fdHlwZSI6ICJ1bmNvbmRpdGlvbmFsIiwgImxvY2FsX3JhbmsiOiAwLCAicmFuayI6IDAsICJ1c2VyX3NjcmlwdCI6ICJ0cmFpbi5weSIsICJnbG9iYWxfbnVtX2dwdXMiOiAyfQ==']
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1130: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1139: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1130: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/neox_arguments/arguments.py:1139: SyntaxWarning: assertion is always true, perhaps remove parentheses?
+  assert (
+[2026-10-17 11:35:55,620] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2026-10-17 11:35:55,635] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+fatal: not a git repository (or any of the parent directories): .git
+fatal: not a git repository (or any of the parent directories): .git
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+Unable to import Mamba kernels. Install them from our requirements/requirements-mamba.txt,     or directly from https://github.com/state-spaces/mamba
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+For s3 checkpointing, please install boto3 either using requirements/requirements-s3.txt or https://github.com/boto/boto3
+For s3 checkpointing, please install hf_transfer either using requirements/requirements-s3.txt or https://github.com/huggingface/hf_transfer
+NeoXArgs.configure_distributed_args() using world size: 2 and model-parallel size: 2 
+> building GPT2BPETokenizer tokenizer ...
+ > padded vocab (size: 50257) with 211887 dummy tokens (new size: 262144)
+[2026-10-17 11:36:00,727] [INFO] [comm.py:658:init_distributed] cdb=None
+wandb: Currently logged in as: aflah to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+/usr/local/lib/python3.10/dist-packages/pydantic/main.py:314: UserWarning: Pydantic serializer warnings:
+  Expected `list[str]` but got `tuple` - serialized value may not be as expected
+  Expected `list[str]` but got `tuple` - serialized value may not be as expected
+  return self.__pydantic_serializer__.to_python(
+wandb: setting up run typ3ydjh
+wandb: Tracking run with wandb version 0.22.3
+wandb: Run data is saved locally in /tmp/fused-ce-testing-source.jsm8Tf/wandb/run-20261017_113601-typ3ydjh
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 1b-wikitext2-tp2-vocab262144-20261017T113407Z-fused
+wandb: ⭐️ View project at https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444
+wandb: 🚀 View run at https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/typ3ydjh
+> initializing torch distributed ...
+[2026-10-17 11:36:02,521] [INFO] [comm.py:658:init_distributed] cdb=None
+[2026-10-17 11:36:02,522] [INFO] [comm.py:689:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/data/data_utils.py:768: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+  flags = torch.cuda.LongTensor([0, 0, 0])
+> initializing model parallel with size 2
+MPU DP: [0]
+MPU DP: [1]
+MPU PP: [0]
+MPU PP: [1]
+MPU MP: [0, 1]
+[2026-10-17 11:36:02,952] [INFO] [checkpointing.py:1125:configure] Activation Checkpointing Information
+[2026-10-17 11:36:02,952] [INFO] [checkpointing.py:1126:configure] ----Partition Activations False, CPU CHECKPOINTING False
+[2026-10-17 11:36:02,952] [INFO] [checkpointing.py:1127:configure] ----contiguous Memory Checkpointing False with 16 total layers
+[2026-10-17 11:36:02,952] [INFO] [checkpointing.py:1128:configure] ----Synchronization False
+[2026-10-17 11:36:02,952] [INFO] [checkpointing.py:1129:configure] ----Profiling time in checkpointing False
+> setting random seeds to 1234 ...
+[2026-10-17 11:36:02,954] [INFO] [checkpointing.py:229:model_parallel_cuda_manual_seed] > initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 3952 and data parallel seed: 1234
+make: Entering directory '/tmp/fused-ce-testing-source.jsm8Tf/megatron/data'
+make: Nothing to be done for 'default'.
+make: Leaving directory '/tmp/fused-ce-testing-source.jsm8Tf/megatron/data'
+> building train, validation, and test datasets ...
+    reading sizes...
+    reading pointers...
+    reading document index...
+    creating numpy buffer of mmap...
+    creating memory view of numpy buffer...
+ > dataset split:
+    train:
+     document indices in [0, 21391) total of 21391 documents
+    validation:
+     document indices in [21391, 22579) total of 1188 documents
+    test:
+     document indices in [22579, 23767) total of 1188 documents
+/tmp/fused-ce-testing-source.jsm8Tf/megatron/data/gpt2_dataset.py:373: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+  counts = torch.cuda.LongTensor([1])
+ > loading doc-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_train_indexmap_200ns_2048sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_train_indexmap_200ns_2048sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_train_indexmap_200ns_2048sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.013 seconds
+    total number of samples: 1043
+    total number of epochs: 1
+ > loading doc-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_valid_indexmap_0ns_2048sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_valid_indexmap_0ns_2048sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_valid_indexmap_0ns_2048sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.012 seconds
+    total number of samples: 56
+    total number of epochs: 1
+ > loading doc-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_test_indexmap_0ns_2048sl_1234s_packedpi_ac_doc_idx.npy
+ > loading sample-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_test_indexmap_0ns_2048sl_1234s_packedpi_ac_sample_idx.npy
+ > loading shuffle-idx mapping from /workspace/gpt-neox/logs/inter_document_attention_1b_smoke/data/wikitext2_raw/wikitext2_raw_text_document_test_indexmap_0ns_2048sl_1234s_packedpi_ac_shuffle_idx.npy
+    loaded indexed file in 0.012 seconds
+    total number of samples: 60
+    total number of epochs: 1
+building GPT2 model ...
+SEED_LAYERS=False BASE_SEED=1234 SEED_FN=None
+Using topology: {ProcessCoord(pipe=0, data=0, model=0): 0, ProcessCoord(pipe=0, data=0, model=1): 1}
+[2026-10-17 11:36:04,157] [INFO] [module.py:398:_partition_layers] Partitioning pipeline stages with method type:transformer|mlp
+stage=0 layers=21
+     0: EmbeddingPipe
+     1: _pre_transformer_block
+     2: ParallelTransformerLayerPipe
+     3: ParallelTransformerLayerPipe
+     4: ParallelTransformerLayerPipe
+     5: ParallelTransformerLayerPipe
+     6: ParallelTransformerLayerPipe
+     7: ParallelTransformerLayerPipe
+     8: ParallelTransformerLayerPipe
+     9: ParallelTransformerLayerPipe
+    10: ParallelTransformerLayerPipe
+    11: ParallelTransformerLayerPipe
+    12: ParallelTransformerLayerPipe
+    13: ParallelTransformerLayerPipe
+    14: ParallelTransformerLayerPipe
+    15: ParallelTransformerLayerPipe
+    16: ParallelTransformerLayerPipe
+    17: ParallelTransformerLayerPipe
+    18: _post_transformer_block
+    19: NormPipe
+    20: EmbeddingPipe
+  loss: partial
+Configuring Optimizer type: Adam with params: {'lr': 0.00025, 'betas': [0.9, 0.95], 'eps': 1e-08}
+> learning rate decay style: cosine
+DeepSpeed is enabled.
+[2026-10-17 11:36:04,596] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed info: version=0.16.5+91d1c55b, git-hash=91d1c55b, git-branch=HEAD
+[2026-10-17 11:36:04,597] [INFO] [config.py:734:__init__] Config mesh_device None world_size = 1
+[2026-10-17 11:36:04,598] [WARNING] [config_utils.py:70:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+[2026-10-17 11:36:04,641] [INFO] [config.py:734:__init__] Config mesh_device None world_size = 1
+[2026-10-17 11:36:04,642] [WARNING] [config_utils.py:70:_process_deprecated_field] Config parameter cpu_offload is deprecated use offload_optimizer instead
+[2026-10-17 11:36:04,704] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2026-10-17 11:36:04,707] [INFO] [logging.py:107:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2026-10-17 11:36:04,707] [INFO] [logging.py:107:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2026-10-17 11:36:04,717] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2026-10-17 11:36:04,718] [INFO] [logging.py:107:log_dist] [Rank 0] Creating BF16 optimizer
+[2026-10-17 11:36:04,770] [INFO] [engine.py:146:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2026-10-17 11:36:04,940] [INFO] [utils.py:781:see_memory_usage] begin bf16_optimizer
+[2026-10-17 11:36:04,941] [INFO] [utils.py:782:see_memory_usage] MA 1.25 GB         Max_MA 1.25 GB         CA 1.25 GB         Max_CA 1 GB 
+[2026-10-17 11:36:04,942] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.91 GB, percent = 3.9%
+[2026-10-17 11:36:05,101] [INFO] [utils.py:781:see_memory_usage] before initializing group 0
+[2026-10-17 11:36:05,101] [INFO] [utils.py:782:see_memory_usage] MA 1.25 GB         Max_MA 1.25 GB         CA 1.25 GB         Max_CA 1 GB 
+[2026-10-17 11:36:05,102] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.89 GB, percent = 3.9%
+[2026-10-17 11:36:05,255] [INFO] [utils.py:781:see_memory_usage] after initializing group 0
+[2026-10-17 11:36:05,256] [INFO] [utils.py:782:see_memory_usage] MA 6.25 GB         Max_MA 6.25 GB         CA 8.75 GB         Max_CA 9 GB 
+[2026-10-17 11:36:05,257] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.89 GB, percent = 3.9%
+[2026-10-17 11:36:05,406] [INFO] [utils.py:781:see_memory_usage] before initializing group 1
+[2026-10-17 11:36:05,406] [INFO] [utils.py:782:see_memory_usage] MA 6.25 GB         Max_MA 6.25 GB         CA 8.75 GB         Max_CA 9 GB 
+[2026-10-17 11:36:05,407] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.89 GB, percent = 3.9%
+[2026-10-17 11:36:05,559] [INFO] [utils.py:781:see_memory_usage] after initializing group 1
+[2026-10-17 11:36:05,560] [INFO] [utils.py:782:see_memory_usage] MA 6.25 GB         Max_MA 6.25 GB         CA 8.75 GB         Max_CA 9 GB 
+[2026-10-17 11:36:05,560] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.89 GB, percent = 3.9%
+[2026-10-17 11:36:05,715] [INFO] [utils.py:781:see_memory_usage] end bf16_ optimizer
+[2026-10-17 11:36:05,715] [INFO] [utils.py:782:see_memory_usage] MA 6.25 GB         Max_MA 6.25 GB         CA 8.75 GB         Max_CA 9 GB 
+[2026-10-17 11:36:05,717] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 38.9 GB, percent = 3.9%
+[2026-10-17 11:36:05,717] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Final Optimizer = BF16_Optimizer
+[2026-10-17 11:36:05,717] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2026-10-17 11:36:05,717] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed LR Scheduler = <megatron.learning_rates.AnnealingLR object at 0x7ec2505a16c0>
+[2026-10-17 11:36:05,717] [INFO] [logging.py:107:log_dist] [Rank 0] step=0, skipped=0, lr=[0.00025, 0.00025], mom=[[0.9, 0.95], [0.9, 0.95]]
+[2026-10-17 11:36:05,718] [INFO] [config.py:1001:print] DeepSpeedEngine configuration:
+[2026-10-17 11:36:05,718] [INFO] [config.py:1005:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2026-10-17 11:36:05,718] [INFO] [config.py:1005:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'intra_op_parallelism': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   amp_enabled .................. False
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   amp_params ................... False
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   bfloat16_enabled ............. True
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   bfloat16_immediate_grad_update  False
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   checkpoint_parallel_write_pipeline  False
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   checkpoint_tag_validation_enabled  True
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   checkpoint_tag_validation_fail  False
+[2026-10-17 11:36:05,719] [INFO] [config.py:1005:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7ec250a20310>
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   communication_data_type ...... None
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   curriculum_enabled_legacy .... False
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   curriculum_params_legacy ..... False
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   data_efficiency_enabled ...... False
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   dataloader_drop_last ......... False
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   disable_allgather ............ False
+[2026-10-17 11:36:05,720] [INFO] [config.py:1005:print]   dump_state ................... False
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   dynamic_loss_scale_args ...... None
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_enabled ........... False
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_gas_boundary_resolution  1
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_layer_num ......... 0
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_max_iter .......... 100
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_stability ......... 1e-06
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_tol ............... 0.01
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   eigenvalue_verbose ........... False
+[2026-10-17 11:36:05,721] [INFO] [config.py:1005:print]   elasticity_enabled ........... False
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   fp16_auto_cast ............... None
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   fp16_enabled ................. False
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   fp16_master_weights_and_gradients  False
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   global_rank .................. 0
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   grad_accum_dtype ............. fp32
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   gradient_accumulation_steps .. 1
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   gradient_clipping ............ 1.0
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   gradient_predivide_factor .... 1.0
+[2026-10-17 11:36:05,722] [INFO] [config.py:1005:print]   graph_harvesting ............. False
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   initial_dynamic_scale ........ 1
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   load_universal_checkpoint .... False
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   loss_scale ................... 1.0
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   memory_breakdown ............. False
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   mics_hierarchial_params_gather  False
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   mics_shard_size .............. -1
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2026-10-17 11:36:05,723] [INFO] [config.py:1005:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   optimizer_legacy_fusion ...... False
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   optimizer_name ............... adam
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   optimizer_params ............. {'lr': 0.00025, 'betas': [0.9, 0.95], 'eps': 1e-08}
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   pld_enabled .................. False
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   pld_params ................... False
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   prescale_gradients ........... False
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   scheduler_name ............... None
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   scheduler_params ............. None
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   seq_parallel_communication_data_type  torch.float32
+[2026-10-17 11:36:05,724] [INFO] [config.py:1005:print]   sparse_attention ............. None
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   sparse_gradients_enabled ..... False
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   steps_per_print .............. 1
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   tensor_parallel_config ....... dtype=torch.float16 autotp_size=0 tensor_parallel=TPConfig(tp_size=1, tp_grain_size=1, mpu=None, tp_group=None) injection_policy_tuple=None keep_module_on_host=False replace_with_kernel_inject=False
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   timers_config ................ enabled=True synchronized=True
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   train_batch_size ............. 4
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   train_micro_batch_size_per_gpu  4
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   use_data_before_expert_parallel_  False
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   use_node_local_storage ....... False
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   wall_clock_breakdown ......... False
+[2026-10-17 11:36:05,725] [INFO] [config.py:1005:print]   weight_quantization_config ... None
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   world_size ................... 1
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   zero_allow_untested_optimizer  False
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   zero_config .................. stage=0 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=False module_granularity_threshold=0 use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False zeropp_loco_param=None mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True log_trace_cache_warnings=False
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   zero_enabled ................. False
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   zero_force_ds_cpu_optimizer .. True
+[2026-10-17 11:36:05,726] [INFO] [config.py:1005:print]   zero_optimization_stage ...... 0
+[2026-10-17 11:36:05,726] [INFO] [config.py:991:print_user_config]   json = {
+    "train_batch_size": 4, 
+    "train_micro_batch_size_per_gpu": 4, 
+    "optimizer": {
+        "type": "Adam", 
+        "params": {
+            "lr": 0.00025, 
+            "betas": [0.9, 0.95], 
+            "eps": 1e-08
+        }
+    }, 
+    "fp32_allreduce": true, 
+    "bf16": {
+        "enabled": true
+    }, 
+    "gradient_clipping": 1.0, 
+    "zero_optimization": {
+        "stage": 0, 
+        "allgather_partitions": true, 
+        "allgather_bucket_size": 5.000000e+08, 
+        "overlap_comm": true, 
+        "reduce_scatter": true, 
+        "reduce_bucket_size": 5.000000e+08, 
+        "contiguous_gradients": true, 
+        "cpu_offload": false
+    }, 
+    "steps_per_print": 1, 
+    "data_types": {
+        "grad_accum_dtype": "fp32"
+    }
+}
+[2026-10-17 11:36:05,726] [INFO] [engine.py:105:__init__] CONFIG: micro_batches=1 micro_batch_size=4
+[2026-10-17 11:36:05,727] [INFO] [engine.py:146:__init__] is_pipe_partitioned= True is_grad_partitioned= True
+[2026-10-17 11:36:05,838] [INFO] [engine.py:165:__init__] RANK=0 STAGE=0 LAYERS=21 [0, 21) STAGE_PARAMS=671404032 (671.404M) TOTAL_PARAMS=1342808064 (1342.808M) UNIQUE_PARAMS=1342808064 (1342.808M)
+[2026-10-17 11:36:05,838] [INFO] [engine.py:165:__init__] RANK=1 STAGE=0 LAYERS=21 [0, 21) STAGE_PARAMS=671404032 (671.404M) TOTAL_PARAMS=1342808064 (1342.808M) UNIQUE_PARAMS=1342808064 (1342.808M)
+ > number of parameters on model parallel rank 1: 671404032
+ > number of parameters on model parallel rank 0: 671404032
+ > total params: 1,342,808,064
+setting training data start iteration to 0
+setting validation data start iteration to 0
+done with setups ...
+time (ms) | train/valid/test data loaders: 750.65 | model and optimizer: 1702.69 | train/valid/test data iterators: 224.76
+training ...
+[2026-10-17 11:36:07,593] [INFO] [logging.py:107:log_dist] [Rank 0] step=1, skipped=0, lr=[0.00024977800694818056, 0.00024977800694818056], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 1 loss: 12.6454 iter time (s): 1.516 samples/sec: 2.638
+ samples/sec: 2.614 | iteration        1/      50 | elapsed time per iteration (ms): 1530.2 | learning rate: 2.498E-04 | approx flops per GPU: 28.7TFLOPS | lm_loss: 1.264538E+01 | number of skipped iterations:   0 | number of nan iterations:   0 |
+after 1 iterations memory (MB) | allocated: 14922.7314453125 | max allocated: 15211.47216796875 | reserved: 19716.0 | max reserved: 19716.0
+time (ms)
+[2026-10-17 11:36:08,341] [INFO] [logging.py:107:log_dist] [Rank 0] step=2, skipped=0, lr=[0.00024911290389787876, 0.00024911290389787876], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 2 loss: 11.0372 iter time (s): 0.735 samples/sec: 5.440
+ samples/sec: 5.340 | iteration        2/      50 | elapsed time per iteration (ms): 749.0 | learning rate: 2.491E-04 | approx flops per GPU: 58.7TFLOPS | lm_loss: 1.103717E+01 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:09,079] [INFO] [logging.py:107:log_dist] [Rank 0] step=3, skipped=0, lr=[0.0002480073157069775, 0.0002480073157069775], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 3 loss: 10.3691 iter time (s): 0.727 samples/sec: 5.502
+ samples/sec: 5.423 | iteration        3/      50 | elapsed time per iteration (ms): 737.6 | learning rate: 2.480E-04 | approx flops per GPU: 59.6TFLOPS | lm_loss: 1.036906E+01 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:09,810] [INFO] [logging.py:107:log_dist] [Rank 0] step=4, skipped=0, lr=[0.000246465605626971, 0.000246465605626971], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 4 loss: 9.9098 iter time (s): 0.721 samples/sec: 5.546
+ samples/sec: 5.467 | iteration        4/      50 | elapsed time per iteration (ms): 731.6 | learning rate: 2.465E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 9.909774E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:10,542] [INFO] [logging.py:107:log_dist] [Rank 0] step=5, skipped=0, lr=[0.0002444938580832048, 0.0002444938580832048], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 5 loss: 9.4827 iter time (s): 0.721 samples/sec: 5.549
+ samples/sec: 5.469 | iteration        5/      50 | elapsed time per iteration (ms): 731.4 | learning rate: 2.445E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 9.482655E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:11,273] [INFO] [logging.py:107:log_dist] [Rank 0] step=6, skipped=0, lr=[0.00024209985466242827, 0.00024209985466242827], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 6 loss: 9.0374 iter time (s): 0.721 samples/sec: 5.547
+ samples/sec: 5.467 | iteration        6/      50 | elapsed time per iteration (ms): 731.6 | learning rate: 2.421E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 9.037366E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:12,004] [INFO] [logging.py:107:log_dist] [Rank 0] step=7, skipped=0, lr=[0.0002392930434024272, 0.0002392930434024272], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 7 loss: 15.1100 iter time (s): 0.720 samples/sec: 5.554
+ samples/sec: 5.474 | iteration        7/      50 | elapsed time per iteration (ms): 730.7 | learning rate: 2.393E-04 | approx flops per GPU: 60.2TFLOPS | lm_loss: 1.511003E+01 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:12,737] [INFO] [logging.py:107:log_dist] [Rank 0] step=8, skipped=0, lr=[0.00023608450150493465, 0.00023608450150493465], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 8 loss: 8.5328 iter time (s): 0.723 samples/sec: 5.535
+ samples/sec: 5.453 | iteration        8/      50 | elapsed time per iteration (ms): 733.5 | learning rate: 2.361E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 8.532848E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:13,469] [INFO] [logging.py:107:log_dist] [Rank 0] step=9, skipped=0, lr=[0.0002324868916189767, 0.0002324868916189767], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 9 loss: 8.3221 iter time (s): 0.721 samples/sec: 5.549
+ samples/sec: 5.469 | iteration        9/      50 | elapsed time per iteration (ms): 731.4 | learning rate: 2.325E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 8.322098E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:14,200] [INFO] [logging.py:107:log_dist] [Rank 0] step=10, skipped=0, lr=[0.00022851441186718158, 0.00022851441186718158], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 10 loss: 8.1509 iter time (s): 0.721 samples/sec: 5.550
+ samples/sec: 5.468 | iteration       10/      50 | elapsed time per iteration (ms): 731.5 | learning rate: 2.285E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 8.150881E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:14,942] [INFO] [logging.py:107:log_dist] [Rank 0] step=11, skipped=0, lr=[0.0002241827398122763, 0.0002241827398122763], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 11 loss: 8.0458 iter time (s): 0.725 samples/sec: 5.516
+ samples/sec: 5.391 | iteration       11/      50 | elapsed time per iteration (ms): 741.9 | learning rate: 2.242E-04 | approx flops per GPU: 59.3TFLOPS | lm_loss: 8.045771E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:15,682] [INFO] [logging.py:107:log_dist] [Rank 0] step=12, skipped=0, lr=[0.00021950897058490882, 0.00021950897058490882], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 12 loss: 8.0005 iter time (s): 0.723 samples/sec: 5.531
+ samples/sec: 5.409 | iteration       12/      50 | elapsed time per iteration (ms): 739.5 | learning rate: 2.195E-04 | approx flops per GPU: 59.5TFLOPS | lm_loss: 8.000496E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:16,415] [INFO] [logging.py:107:log_dist] [Rank 0] step=13, skipped=0, lr=[0.00021451154941697748, 0.00021451154941697748], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 13 loss: 7.9413 iter time (s): 0.723 samples/sec: 5.535
+ samples/sec: 5.461 | iteration       13/      50 | elapsed time per iteration (ms): 732.4 | learning rate: 2.145E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.941257E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:17,145] [INFO] [logging.py:107:log_dist] [Rank 0] step=14, skipped=0, lr=[0.00020921019884672761, 0.00020921019884672761], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 14 loss: 8.0245 iter time (s): 0.721 samples/sec: 5.551
+ samples/sec: 5.477 | iteration       14/      50 | elapsed time per iteration (ms): 730.3 | learning rate: 2.092E-04 | approx flops per GPU: 60.2TFLOPS | lm_loss: 8.024519E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:17,879] [INFO] [logging.py:107:log_dist] [Rank 0] step=15, skipped=0, lr=[0.00020362584088290327, 0.00020362584088290327], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 15 loss: 7.8916 iter time (s): 0.724 samples/sec: 5.522
+ samples/sec: 5.447 | iteration       15/      50 | elapsed time per iteration (ms): 734.3 | learning rate: 2.036E-04 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.891607E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:18,613] [INFO] [logging.py:107:log_dist] [Rank 0] step=16, skipped=0, lr=[0.00019778051443513711, 0.00019778051443513711], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 16 loss: 7.9108 iter time (s): 0.723 samples/sec: 5.532
+ samples/sec: 5.455 | iteration       16/      50 | elapsed time per iteration (ms): 733.3 | learning rate: 1.978E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.910803E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:19,344] [INFO] [logging.py:107:log_dist] [Rank 0] step=17, skipped=0, lr=[0.00019169728833644297, 0.00019169728833644297], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 17 loss: 7.8992 iter time (s): 0.721 samples/sec: 5.546
+ samples/sec: 5.465 | iteration       17/      50 | elapsed time per iteration (ms): 732.0 | learning rate: 1.917E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.899215E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:20,078] [INFO] [logging.py:107:log_dist] [Rank 0] step=18, skipped=0, lr=[0.00018540017030107067, 0.00018540017030107067], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 18 loss: 7.9526 iter time (s): 0.723 samples/sec: 5.536
+ samples/sec: 5.451 | iteration       18/      50 | elapsed time per iteration (ms): 733.8 | learning rate: 1.854E-04 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.952554E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:20,811] [INFO] [logging.py:107:log_dist] [Rank 0] step=19, skipped=0, lr=[0.0001789140121770263, 0.0001789140121770263], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 19 loss: 7.8862 iter time (s): 0.722 samples/sec: 5.542
+ samples/sec: 5.464 | iteration       19/      50 | elapsed time per iteration (ms): 732.1 | learning rate: 1.789E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.886153E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:21,541] [INFO] [logging.py:107:log_dist] [Rank 0] step=20, skipped=0, lr=[0.0001722644118671816, 0.0001722644118671816], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 20 loss: 7.8035 iter time (s): 0.718 samples/sec: 5.568
+ samples/sec: 5.492 | iteration       20/      50 | elapsed time per iteration (ms): 728.3 | learning rate: 1.723E-04 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.803548E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:22,271] [INFO] [logging.py:107:log_dist] [Rank 0] step=21, skipped=0, lr=[0.00016547761230604615, 0.00016547761230604615], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 21 loss: 7.9588 iter time (s): 0.722 samples/sec: 5.538
+ samples/sec: 5.459 | iteration       21/      50 | elapsed time per iteration (ms): 732.7 | learning rate: 1.655E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.958781E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:23,005] [INFO] [logging.py:107:log_dist] [Rank 0] step=22, skipped=0, lr=[0.00015858039789089405, 0.00015858039789089405], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 22 loss: 7.7863 iter time (s): 0.723 samples/sec: 5.532
+ samples/sec: 5.450 | iteration       22/      50 | elapsed time per iteration (ms): 733.9 | learning rate: 1.586E-04 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.786281E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:23,736] [INFO] [logging.py:107:log_dist] [Rank 0] step=23, skipped=0, lr=[0.00015159998877598425, 0.00015159998877598425], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 23 loss: 7.7824 iter time (s): 0.721 samples/sec: 5.550
+ samples/sec: 5.472 | iteration       23/      50 | elapsed time per iteration (ms): 731.0 | learning rate: 1.516E-04 | approx flops per GPU: 60.2TFLOPS | lm_loss: 7.782410E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:24,469] [INFO] [logging.py:107:log_dist] [Rank 0] step=24, skipped=0, lr=[0.00014456393344704777, 0.00014456393344704777], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 24 loss: 7.8165 iter time (s): 0.722 samples/sec: 5.540
+ samples/sec: 5.463 | iteration       24/      50 | elapsed time per iteration (ms): 732.2 | learning rate: 1.446E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.816521E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:25,201] [INFO] [logging.py:107:log_dist] [Rank 0] step=25, skipped=0, lr=[0.0001375, 0.0001375], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 25 loss: 7.6478 iter time (s): 0.721 samples/sec: 5.545
+ samples/sec: 5.461 | iteration       25/      50 | elapsed time per iteration (ms): 732.4 | learning rate: 1.375E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.647845E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:25,933] [INFO] [logging.py:107:log_dist] [Rank 0] step=26, skipped=0, lr=[0.00013043606655295225, 0.00013043606655295225], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 26 loss: 7.8575 iter time (s): 0.722 samples/sec: 5.541
+ samples/sec: 5.463 | iteration       26/      50 | elapsed time per iteration (ms): 732.2 | learning rate: 1.304E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.857488E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:26,666] [INFO] [logging.py:107:log_dist] [Rank 0] step=27, skipped=0, lr=[0.0001234000112240158, 0.0001234000112240158], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 27 loss: 7.7359 iter time (s): 0.723 samples/sec: 5.534
+ samples/sec: 5.457 | iteration       27/      50 | elapsed time per iteration (ms): 733.0 | learning rate: 1.234E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.735873E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:27,398] [INFO] [logging.py:107:log_dist] [Rank 0] step=28, skipped=0, lr=[0.00011641960210910598, 0.00011641960210910598], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 28 loss: 7.6793 iter time (s): 0.722 samples/sec: 5.542
+ samples/sec: 5.467 | iteration       28/      50 | elapsed time per iteration (ms): 731.7 | learning rate: 1.164E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.679306E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:28,131] [INFO] [logging.py:107:log_dist] [Rank 0] step=29, skipped=0, lr=[0.00010952238769395383, 0.00010952238769395383], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 29 loss: 7.6672 iter time (s): 0.723 samples/sec: 5.533
+ samples/sec: 5.459 | iteration       29/      50 | elapsed time per iteration (ms): 732.8 | learning rate: 1.095E-04 | approx flops per GPU: 60.0TFLOPS | lm_loss: 7.667243E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:28,862] [INFO] [logging.py:107:log_dist] [Rank 0] step=30, skipped=0, lr=[0.00010273558813281845, 0.00010273558813281845], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 30 loss: 7.6468 iter time (s): 0.721 samples/sec: 5.549
+ samples/sec: 5.469 | iteration       30/      50 | elapsed time per iteration (ms): 731.4 | learning rate: 1.027E-04 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.646816E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:29,594] [INFO] [logging.py:107:log_dist] [Rank 0] step=31, skipped=0, lr=[9.608598782297375e-05, 9.608598782297375e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 31 loss: 7.5775 iter time (s): 0.720 samples/sec: 5.555
+ samples/sec: 5.480 | iteration       31/      50 | elapsed time per iteration (ms): 729.9 | learning rate: 9.609E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.577550E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:30,323] [INFO] [logging.py:107:log_dist] [Rank 0] step=32, skipped=0, lr=[8.959982969892932e-05, 8.959982969892932e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 32 loss: 7.5910 iter time (s): 0.719 samples/sec: 5.567
+ samples/sec: 5.491 | iteration       32/      50 | elapsed time per iteration (ms): 728.5 | learning rate: 8.960E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.590975E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:31,055] [INFO] [logging.py:107:log_dist] [Rank 0] step=33, skipped=0, lr=[8.330271166355702e-05, 8.330271166355702e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 33 loss: 7.6187 iter time (s): 0.724 samples/sec: 5.523
+ samples/sec: 5.445 | iteration       33/      50 | elapsed time per iteration (ms): 734.6 | learning rate: 8.330E-05 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.618677E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:31,789] [INFO] [logging.py:107:log_dist] [Rank 0] step=34, skipped=0, lr=[7.721948556486285e-05, 7.721948556486285e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 34 loss: 7.6238 iter time (s): 0.723 samples/sec: 5.529
+ samples/sec: 5.452 | iteration       34/      50 | elapsed time per iteration (ms): 733.6 | learning rate: 7.722E-05 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.623778E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:32,519] [INFO] [logging.py:107:log_dist] [Rank 0] step=35, skipped=0, lr=[7.137415911709679e-05, 7.137415911709679e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 35 loss: 7.5520 iter time (s): 0.718 samples/sec: 5.572
+ samples/sec: 5.494 | iteration       35/      50 | elapsed time per iteration (ms): 728.1 | learning rate: 7.137E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.552010E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:33,251] [INFO] [logging.py:107:log_dist] [Rank 0] step=36, skipped=0, lr=[6.57898011532724e-05, 6.57898011532724e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 36 loss: 7.5859 iter time (s): 0.724 samples/sec: 5.526
+ samples/sec: 5.447 | iteration       36/      50 | elapsed time per iteration (ms): 734.3 | learning rate: 6.579E-05 | approx flops per GPU: 59.9TFLOPS | lm_loss: 7.585908E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:33,983] [INFO] [logging.py:107:log_dist] [Rank 0] step=37, skipped=0, lr=[6.048845058302252e-05, 6.048845058302252e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 37 loss: 7.5728 iter time (s): 0.720 samples/sec: 5.556
+ samples/sec: 5.482 | iteration       37/      50 | elapsed time per iteration (ms): 729.7 | learning rate: 6.049E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.572830E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:34,712] [INFO] [logging.py:107:log_dist] [Rank 0] step=38, skipped=0, lr=[5.549102941509123e-05, 5.549102941509123e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 38 loss: 7.5886 iter time (s): 0.719 samples/sec: 5.566
+ samples/sec: 5.487 | iteration       38/      50 | elapsed time per iteration (ms): 729.0 | learning rate: 5.549E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.588634E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:35,442] [INFO] [logging.py:107:log_dist] [Rank 0] step=39, skipped=0, lr=[5.081726018772372e-05, 5.081726018772372e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 39 loss: 7.5170 iter time (s): 0.722 samples/sec: 5.538
+ samples/sec: 5.467 | iteration       39/      50 | elapsed time per iteration (ms): 731.6 | learning rate: 5.082E-05 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.516972E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:36,172] [INFO] [logging.py:107:log_dist] [Rank 0] step=40, skipped=0, lr=[4.648558813281842e-05, 4.648558813281842e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 40 loss: 7.4357 iter time (s): 0.718 samples/sec: 5.570
+ samples/sec: 5.497 | iteration       40/      50 | elapsed time per iteration (ms): 727.7 | learning rate: 4.649E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.435746E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:36,899] [INFO] [logging.py:107:log_dist] [Rank 0] step=41, skipped=0, lr=[4.251310838102333e-05, 4.251310838102333e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 41 loss: 7.5276 iter time (s): 0.718 samples/sec: 5.569
+ samples/sec: 5.490 | iteration       41/      50 | elapsed time per iteration (ms): 728.5 | learning rate: 4.251E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.527627E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:37,628] [INFO] [logging.py:107:log_dist] [Rank 0] step=42, skipped=0, lr=[3.891549849506535e-05, 3.891549849506535e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 42 loss: 7.5490 iter time (s): 0.718 samples/sec: 5.575
+ samples/sec: 5.498 | iteration       42/      50 | elapsed time per iteration (ms): 727.6 | learning rate: 3.892E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.548954E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:38,355] [INFO] [logging.py:107:log_dist] [Rank 0] step=43, skipped=0, lr=[3.570695659757282e-05, 3.570695659757282e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 43 loss: 7.4581 iter time (s): 0.717 samples/sec: 5.578
+ samples/sec: 5.497 | iteration       43/      50 | elapsed time per iteration (ms): 727.7 | learning rate: 3.571E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.458055E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:39,085] [INFO] [logging.py:107:log_dist] [Rank 0] step=44, skipped=0, lr=[3.2900145337571723e-05, 3.2900145337571723e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 44 loss: 7.5016 iter time (s): 0.721 samples/sec: 5.546
+ samples/sec: 5.470 | iteration       44/      50 | elapsed time per iteration (ms): 731.2 | learning rate: 3.290E-05 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.501615E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:39,816] [INFO] [logging.py:107:log_dist] [Rank 0] step=45, skipped=0, lr=[3.050614191679523e-05, 3.050614191679523e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 45 loss: 7.4698 iter time (s): 0.719 samples/sec: 5.563
+ samples/sec: 5.488 | iteration       45/      50 | elapsed time per iteration (ms): 728.8 | learning rate: 3.051E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.469783E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:40,545] [INFO] [logging.py:107:log_dist] [Rank 0] step=46, skipped=0, lr=[2.8534394373029017e-05, 2.8534394373029017e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 46 loss: 7.4236 iter time (s): 0.722 samples/sec: 5.544
+ samples/sec: 5.466 | iteration       46/      50 | elapsed time per iteration (ms): 731.8 | learning rate: 2.853E-05 | approx flops per GPU: 60.1TFLOPS | lm_loss: 7.423596E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:41,276] [INFO] [logging.py:107:log_dist] [Rank 0] step=47, skipped=0, lr=[2.699268429302252e-05, 2.699268429302252e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 47 loss: 7.4870 iter time (s): 0.719 samples/sec: 5.564
+ samples/sec: 5.487 | iteration       47/      50 | elapsed time per iteration (ms): 728.9 | learning rate: 2.699E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.486974E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:42,004] [INFO] [logging.py:107:log_dist] [Rank 0] step=48, skipped=0, lr=[2.5887096102121254e-05, 2.5887096102121254e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 48 loss: 7.5277 iter time (s): 0.718 samples/sec: 5.569
+ samples/sec: 5.495 | iteration       48/      50 | elapsed time per iteration (ms): 727.9 | learning rate: 2.589E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.527731E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:42,733] [INFO] [logging.py:107:log_dist] [Rank 0] step=49, skipped=0, lr=[2.522199305181945e-05, 2.522199305181945e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 49 loss: 7.3970 iter time (s): 0.719 samples/sec: 5.564
+ samples/sec: 5.482 | iteration       49/      50 | elapsed time per iteration (ms): 729.6 | learning rate: 2.522E-05 | approx flops per GPU: 60.3TFLOPS | lm_loss: 7.397044E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[2026-10-17 11:36:43,463] [INFO] [logging.py:107:log_dist] [Rank 0] step=50, skipped=0, lr=[2.5e-05, 2.5e-05], mom=[[0.9, 0.95], [0.9, 0.95]]
+steps: 50 loss: 7.5360 iter time (s): 0.719 samples/sec: 5.564
+ samples/sec: 5.491 | iteration       50/      50 | elapsed time per iteration (ms): 728.5 | learning rate: 2.500E-05 | approx flops per GPU: 60.4TFLOPS | lm_loss: 7.536018E+00 | number of skipped iterations:   0 | number of nan iterations:   0 |
+time (ms)
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33m1b-wikitext2-tp2-vocab262144-20261017T113407Z-fused[0m at: [34m[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20261017_113601-typ3ydjh/logs[0m
+[2026-10-17 11:36:46,081] [INFO] [launch.py:351:main] Process 1522 exits successfully.
+[2026-10-17 11:36:47,083] [INFO] [launch.py:351:main] Process 1521 exits successfully.
+[2026-10-17T11:36:50+00:00] Finished tp2_fused: PASS (69s)

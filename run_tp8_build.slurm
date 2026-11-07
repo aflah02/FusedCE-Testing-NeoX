@@ -2,7 +2,7 @@
 
 # Build the Hopper image on the allocated node, then run the TP=8 vocabulary
 # sweep. Docker build output and periodic heartbeats are written to both the
-# Slurm output and docker-build-${SLURM_JOB_ID}.log.
+# Slurm output and logs/docker-build-${SLURM_JOB_ID}.log.
 #SBATCH --job-name=fused-ce-tp8-build
 #SBATCH --partition=h100,h100nvl,h100sxm,h200
 #SBATCH --exclude=sws-8h100grid-04
@@ -12,8 +12,8 @@
 #SBATCH --gres=gpu:8
 #SBATCH --mem=256G
 #SBATCH --time=24:00:00
-#SBATCH --output=slurm-%x-%j.out
-#SBATCH --error=slurm-%x-%j.err
+#SBATCH --output=logs/slurm-%x-%j.out
+#SBATCH --error=logs/slurm-%x-%j.err
 
 set -euo pipefail
 
@@ -34,10 +34,11 @@ else
 fi
 
 experiment_dir="${repo_dir}/logs/fused_cross_entropy_testing"
+log_dir="${experiment_dir}/logs"
 benchmark_script="${experiment_dir}/run_tp8.slurm"
 dockerfile="${repo_dir}/containers/docker/Dockerfile.TE"
 image_name="${GPT_NEOX_IMAGE:-gpt-neox:te}"
-build_log="${experiment_dir}/docker-build-${SLURM_JOB_ID:-manual}.log"
+build_log="${log_dir}/docker-build-${SLURM_JOB_ID:-manual}.log"
 heartbeat_seconds="${BUILD_HEARTBEAT_SECONDS:-60}"
 
 if [[ ! -f "${benchmark_script}" || ! -f "${dockerfile}" ]]; then
@@ -50,6 +51,7 @@ if ! [[ "${heartbeat_seconds}" =~ ^[1-9][0-9]*$ ]]; then
   exit 2
 fi
 
+mkdir -p "${log_dir}"
 cd "${repo_dir}"
 exec > >(tee -a "${build_log}") 2>&1
 

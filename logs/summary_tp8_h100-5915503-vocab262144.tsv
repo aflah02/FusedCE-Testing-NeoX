@@ -1,0 +1,3 @@
+variant	exit_code	result	duration_seconds	final_lm_loss	avg_iteration_ms	avg_samples_per_sec
+tp8_h100-5915503-vocab262144_unfused	0	PASS	51	7.654918E+00	132.882	30.145
+tp8_h100-5915503-vocab262144_fused	0	PASS	51	7.627477E+00	127.397	31.434

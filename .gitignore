@@ -1,9 +1,4 @@
-# Retain reproducible inputs; ignore generated benchmark output.
-runs/*
-!runs/.gitkeep
-summary_*.tsv
-comparison_*.tsv
+# Keep benchmark artifacts under logs/ in version control. Ignore only local
+# W&B state, since completed runs are linked from the README.
 wandb/
-slurm-*.out
-slurm-*.err
-docker-build-*.log
+logs/wandb/

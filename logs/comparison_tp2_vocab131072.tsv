@@ -1,0 +1,2 @@
+parallelism	final_loss_abs_diff	unfused_over_fused_speedup
+tp2_vocab131072	0.000287	0.998351

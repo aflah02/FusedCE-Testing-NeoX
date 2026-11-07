@@ -1,0 +1,3 @@
+variant	exit_code	result	duration_seconds	final_lm_loss	avg_iteration_ms	avg_samples_per_sec
+tp2_vocab131072_unfused	0	PASS	72	7.545894E+00	692.127	5.779
+tp2_vocab131072_fused	0	PASS	66	7.546181E+00	693.270	5.770
