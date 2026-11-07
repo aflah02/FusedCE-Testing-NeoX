@@ -264,23 +264,41 @@ microbenchmark of the loss path.
 
 ## Cross-TP vocabulary matrix
 
-The TP=8 sweep completed on 2026-11-07 as Slurm job `5915503` on
-`sws-8h100grid-02`, using eight NVIDIA H100 80GB HBM3 GPUs. All eight training
-runs completed 50 iterations with zero skipped and zero NaN iterations. As in
-the earlier runs, timing is the mean of iterations 11 through 50 and the
-unfused variant ran first in each pair.
+The TP=4 and TP=8 sweeps completed on 2026-11-07 as Slurm jobs `5915524` and
+`5915503`, respectively, on `sws-8h100grid-02`. They used four and eight NVIDIA
+H100 80GB HBM3 GPUs. All 16 training runs completed 50 iterations with zero
+skipped and zero NaN iterations. As in the earlier runs, timing is the mean of
+iterations 11 through 50 and the unfused variant ran first in each pair.
 
 Each cell below is the fused end-to-end speed change, calculated as
 `(unfused iteration time / fused iteration time - 1) * 100`. Positive values
 mean the fused implementation was faster; negative values mean it was slower.
 The ratio in parentheses is unfused time divided by fused time.
 
-| Padded vocabulary | TP=2 | TP=8 |
-| ---: | ---: | ---: |
-| 50,432 | +0.58% (1.0058x) | -1.78% (0.9823x) |
-| 65,536 | -0.24% (0.9976x) | +2.17% (1.0217x) |
-| 131,072 | -0.16% (0.9984x) | +2.38% (1.0238x) |
-| 262,144 | +0.09% (1.0009x) | +4.31% (1.0431x) |
+| Padded vocabulary | TP=2 | TP=4 | TP=8 |
+| ---: | ---: | ---: | ---: |
+| 50,432 | +0.58% (1.0058x) | -2.05% (0.9795x) | -1.78% (0.9823x) |
+| 65,536 | -0.24% (0.9976x) | -0.43% (0.9957x) | +2.17% (1.0217x) |
+| 131,072 | -0.16% (0.9984x) | -0.78% (0.9922x) | +2.38% (1.0238x) |
+| 262,144 | +0.09% (1.0009x) | +0.46% (1.0046x) | +4.31% (1.0431x) |
+
+The raw TP=4 results are:
+
+| Padded vocab | Unfused ms | Fused ms | Fused speed change | Final-loss absolute difference |
+| ---: | ---: | ---: | ---: | ---: |
+| 50,432 | 130.052 | 132.777 | -2.05% | 0.001731 |
+| 65,536 | 131.095 | 131.660 | -0.43% | 0.143261 |
+| 131,072 | 137.465 | 138.545 | -0.78% | 0.034326 |
+| 262,144 | 151.060 | 150.363 | +0.46% | 0.031714 |
+
+The TP=4 W&B run pairs are:
+
+| Padded vocab | Unfused | Fused |
+| ---: | --- | --- |
+| 50,432 | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/etc21p9u) | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/9gjll61d) |
+| 65,536 | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/i0q9aha5) | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/ful0amdj) |
+| 131,072 | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/rwna5ez8) | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/ryileq79) |
+| 262,144 | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/wcg50k88) | [run](https://wandb.ai/aflah/gpt-neox-fused-cross-entropy-issue-1444/runs/8m2o8oje) |
 
 The raw TP=8 results are:
 
@@ -303,15 +321,25 @@ The TP=8 W&B run pairs are:
 ### Final analysis
 
 At TP=2, every measured change is within 0.6% and is best treated as noise for
-these short, single-pair runs. TP=8 shows a vocabulary-dependent benefit: the
-fused path is 1.78% slower at the normal approximately 50K
-vocabulary, but 2.17%, 2.38%, and 4.31% faster at 65K, 131K, and 262K. This is
-consistent with the fused collective becoming more valuable as the loss path
-grows, but it is not yet a statistically strong result.
+these short, single-pair runs. TP=4 does not show the expected intermediate
+benefit: the fused path is 2.05% slower at the normal approximately 50K
+vocabulary, within 0.8% of the unfused path at 65K and 131K, and only 0.46%
+faster at 262K. TP=8 shows the clearest vocabulary-dependent benefit: it is
+1.78% slower at 50K, but 2.17%, 2.38%, and 4.31% faster at 65K, 131K, and
+262K.
 
-The TP=2 runs used H100 PCIe GPUs on `sws-2h100-01`, whereas TP=8 used H100
-HBM3 GPUs on `sws-8h100grid-02`. The percentages are within-run fused versus
-unfused comparisons, so the different machines do not invalidate each pair,
-but absolute iteration times should not be compared across TP columns.
+The full matrix therefore does not show a general speedup or a monotonic
+improvement with TP. It does show the strongest result in the highest-TP,
+largest-vocabulary case. At 262K vocabulary, the measured change rises from
++0.09% at TP=2 to +0.46% at TP=4 and +4.31% at TP=8. Conversely, the normal
+50K vocabulary is slower at both TP=4 and TP=8. This is consistent with the
+saved collective becoming worthwhile only when both communication fan-out and
+the vocabulary are large, but the single short pair per cell is not enough for
+a statistically strong claim.
+
+The TP=2 runs used H100 PCIe GPUs on `sws-2h100-01`, whereas TP=4 and TP=8 used
+H100 HBM3 GPUs on `sws-8h100grid-02`. The percentages are within-run fused
+versus unfused comparisons, so the different machines do not invalidate each
+pair, but absolute iteration times should not be compared across TP columns.
 Repeating each pair and reversing or randomizing run order would be needed for
 confidence intervals and a firm performance claim.

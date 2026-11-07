@@ -92,6 +92,13 @@ else
   gpu_request="device=${gpu_devices}"
 fi
 
+echo "Verifying ${expected_gpu_count} benchmark GPU(s): ${gpu_devices}"
+docker run --rm \
+  --gpus "${gpu_request}" \
+  "${image_name}" \
+  python -c \
+  "import torch; count = torch.cuda.device_count(); print('visible benchmark GPUs', count); assert count == ${expected_gpu_count}, f'expected ${expected_gpu_count} GPUs, found {count}'"
+
 if [[ -n "${WANDB_API_KEY:-}" ]]; then
   wandb_auth_args+=(--env WANDB_API_KEY)
 elif [[ -r "${wandb_netrc_path}" ]]; then

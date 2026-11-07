@@ -36,17 +36,11 @@ experiment_dir="${repo_dir}/logs/fused_cross_entropy_testing"
 launcher="${experiment_dir}/run_matrix.sh"
 image_name="${GPT_NEOX_IMAGE:-gpt-neox:te}"
 image_tar="${GPT_NEOX_IMAGE_TAR:-/NS/llm-pretraining/work/afkhan/GPT-NeoX-Dev/TorchRun_Support/gpt-neox-te.tar}"
-allocated_gpu_devices="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
+slurm_visible_devices="${CUDA_VISIBLE_DEVICES:-unset}"
 
 if [[ ! -f "${launcher}" ]]; then
   echo "Could not find ${launcher}." >&2
   echo "Export GPT_NEOX_REPO=/absolute/repo/path." >&2
-  exit 2
-fi
-
-IFS=',' read -r -a allocated_gpu_list <<< "${allocated_gpu_devices}"
-if [[ "${#allocated_gpu_list[@]}" -ne 4 ]]; then
-  echo "Expected four allocated GPUs; CUDA_VISIBLE_DEVICES=${allocated_gpu_devices}." >&2
   exit 2
 fi
 
@@ -56,13 +50,23 @@ echo "Job ID: ${SLURM_JOB_ID:-not-running-under-slurm}"
 echo "Partition: ${SLURM_JOB_PARTITION:-unknown}"
 echo "Node: $(hostname)"
 echo "Repository: ${repo_dir}"
-echo "Allocated GPU devices: ${allocated_gpu_devices}"
+echo "Slurm CUDA_VISIBLE_DEVICES: ${slurm_visible_devices}"
 echo "Start: $(date --iso-8601=seconds)"
 
 if ! command -v nvidia-smi >/dev/null 2>&1; then
   echo "nvidia-smi is unavailable on the allocated node." >&2
   exit 2
 fi
+
+mapfile -t allocated_gpu_uuids \
+  < <(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+if [[ "${#allocated_gpu_uuids[@]}" -ne 4 ]]; then
+  echo "Expected four allocated GPU UUIDs, found ${#allocated_gpu_uuids[@]}." >&2
+  nvidia-smi -L >&2 || true
+  exit 2
+fi
+allocated_gpu_devices="$(IFS=,; printf '%s' "${allocated_gpu_uuids[*]}")"
+echo "Allocated GPU UUIDs: ${allocated_gpu_devices}"
 
 nvidia-smi --query-gpu=index,name,uuid,memory.total --format=csv,noheader
 nvidia-smi topo -m

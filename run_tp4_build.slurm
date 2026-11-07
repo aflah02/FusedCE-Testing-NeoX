@@ -40,7 +40,7 @@ dockerfile="${repo_dir}/containers/docker/Dockerfile.TE"
 image_name="${GPT_NEOX_IMAGE:-gpt-neox:te}"
 build_log="${log_dir}/docker-build-${SLURM_JOB_ID:-manual}.log"
 heartbeat_seconds="${BUILD_HEARTBEAT_SECONDS:-60}"
-allocated_gpu_devices="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
+slurm_visible_devices="${CUDA_VISIBLE_DEVICES:-unset}"
 
 if [[ ! -f "${benchmark_script}" || ! -f "${dockerfile}" ]]; then
   echo "Missing ${benchmark_script} or ${dockerfile}." >&2
@@ -50,18 +50,6 @@ fi
 if ! [[ "${heartbeat_seconds}" =~ ^[1-9][0-9]*$ ]]; then
   echo "BUILD_HEARTBEAT_SECONDS must be a positive integer." >&2
   exit 2
-fi
-
-IFS=',' read -r -a allocated_gpu_list <<< "${allocated_gpu_devices}"
-if [[ "${#allocated_gpu_list[@]}" -ne 4 ]]; then
-  echo "Expected four allocated GPUs; CUDA_VISIBLE_DEVICES=${allocated_gpu_devices}." >&2
-  exit 2
-fi
-
-if [[ "${allocated_gpu_devices}" == *,* ]]; then
-  gpu_request="\"device=${allocated_gpu_devices}\""
-else
-  gpu_request="device=${allocated_gpu_devices}"
 fi
 
 mkdir -p "${log_dir}"
@@ -77,13 +65,24 @@ log_step "Partition: ${SLURM_JOB_PARTITION:-unknown}"
 log_step "Repository: ${repo_dir}"
 log_step "Dockerfile: ${dockerfile}"
 log_step "Image tag: ${image_name}"
-log_step "Allocated GPU devices: ${allocated_gpu_devices}"
+log_step "Slurm CUDA_VISIBLE_DEVICES: ${slurm_visible_devices}"
 log_step "Combined build log: ${build_log}"
 
 if ! command -v nvidia-smi >/dev/null 2>&1; then
   log_step "ERROR: nvidia-smi is unavailable."
   exit 2
 fi
+
+mapfile -t allocated_gpu_uuids \
+  < <(nvidia-smi --query-gpu=uuid --format=csv,noheader)
+if [[ "${#allocated_gpu_uuids[@]}" -ne 4 ]]; then
+  log_step "ERROR: expected four allocated GPU UUIDs, found ${#allocated_gpu_uuids[@]}."
+  nvidia-smi -L || true
+  exit 2
+fi
+allocated_gpu_devices="$(IFS=,; printf '%s' "${allocated_gpu_uuids[*]}")"
+gpu_request="\"device=${allocated_gpu_devices}\""
+log_step "Allocated GPU UUIDs: ${allocated_gpu_devices}"
 nvidia-smi --query-gpu=index,name,uuid,memory.total --format=csv,noheader
 
 if ! command -v docker >/dev/null 2>&1; then
@@ -150,7 +149,7 @@ docker system df
 
 log_step "Verifying the built image and GPU passthrough."
 docker run --rm --gpus "${gpu_request}" --ipc=host "${image_name}" \
-  python -c 'import torch, flash_attn, transformer_engine; print("torch", torch.__version__, "cuda", torch.version.cuda, "gpus", torch.cuda.device_count())'
+  python -c 'import torch, flash_attn, transformer_engine; count = torch.cuda.device_count(); print("torch", torch.__version__, "cuda", torch.version.cuda, "gpus", count); assert count == 4, f"expected 4 GPUs, found {count}"'
 
 export GPT_NEOX_IMAGE="${image_name}"
 log_step "Image verification passed; starting the TP=4 benchmark sweep."

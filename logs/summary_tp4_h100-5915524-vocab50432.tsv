@@ -1,0 +1,3 @@
+variant	exit_code	result	duration_seconds	final_lm_loss	avg_iteration_ms	avg_samples_per_sec
+tp4_h100-5915524-vocab50432_unfused	0	PASS	39	7.585500E+00	130.052	30.765
+tp4_h100-5915524-vocab50432_fused	0	PASS	39	7.583769E+00	132.777	30.135

@@ -1,0 +1,2 @@
+parallelism	final_loss_abs_diff	unfused_over_fused_speedup
+tp4_h100-5915524-vocab50432	0.001731	0.979477
